@@ -5,4 +5,9 @@
         <file alias="blue.png">resources/ico_blue.png</file>
         <file alias="alpha.png">resources/ico_alpha.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>resources/background.png</file>
+        <file>resources/banner_app.png</file>
+        <file>resources/icon_app.png</file>
+    </qresource>
 </RCC>
