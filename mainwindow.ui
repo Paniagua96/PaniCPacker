@@ -211,7 +211,7 @@ color: rgb(235, 235, 235);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="f_RedChannel_4">
+         <widget class="QFrame" name="f_RedChannel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -241,7 +241,7 @@ color: rgb(235, 235, 235);</string>
             <number>6</number>
            </property>
            <item>
-            <widget class="QWidget" name="w_RedMainRow_4" native="true">
+            <widget class="QWidget" name="w_RedMainRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -296,7 +296,7 @@ color: rgb(235, 235, 235);</string>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="w_RedOptionsRow_4" native="true">
+            <widget class="QWidget" name="w_RedOptionsRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -312,19 +312,6 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_4">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>310</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QCheckBox" name="tggle_Invert_4">
                 <property name="text">
                  <string>Invert?</string>
@@ -338,7 +325,7 @@ color: rgb(235, 235, 235);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="f_RedChannel">
+         <widget class="QFrame" name="f_GreenChannel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -368,7 +355,7 @@ color: rgb(235, 235, 235);</string>
             <number>6</number>
            </property>
            <item>
-            <widget class="QWidget" name="w_RedMainRow" native="true">
+            <widget class="QWidget" name="w_GreenMainRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -420,7 +407,7 @@ color: rgb(235, 235, 235);</string>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="w_RedOptionsRow" native="true">
+            <widget class="QWidget" name="w_GreenOptionsRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -436,19 +423,6 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>310</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QCheckBox" name="tggle_Invert">
                 <property name="text">
                  <string>Invert?</string>
@@ -462,7 +436,7 @@ color: rgb(235, 235, 235);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="f_RedChannel_2">
+         <widget class="QFrame" name="f_BlueChannel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -492,7 +466,7 @@ color: rgb(235, 235, 235);</string>
             <number>6</number>
            </property>
            <item>
-            <widget class="QWidget" name="w_RedMainRow_2" native="true">
+            <widget class="QWidget" name="w_BlueMainRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -541,7 +515,7 @@ color: rgb(235, 235, 235);</string>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="w_RedOptionsRow_2" native="true">
+            <widget class="QWidget" name="w_BlueOptionsRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -557,19 +531,6 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>310</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
                <widget class="QCheckBox" name="tggle_Invert_2">
                 <property name="text">
                  <string>Invert?</string>
@@ -583,7 +544,7 @@ color: rgb(235, 235, 235);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="f_RedChannel_3">
+         <widget class="QFrame" name="f_AlphaChannel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -613,7 +574,7 @@ color: rgb(235, 235, 235);</string>
             <number>6</number>
            </property>
            <item>
-            <widget class="QWidget" name="w_RedMainRow_3" native="true">
+            <widget class="QWidget" name="w_AlphaMainRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -622,7 +583,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_7">
               <item>
-               <widget class="QLabel" name="lbl_RedPreview_3">
+               <widget class="QLabel" name="lbl_AlphaPreview">
                 <property name="maximumSize">
                  <size>
                   <width>32</width>
@@ -641,7 +602,7 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lbl_RedTitle_3">
+               <widget class="QLabel" name="lbl_AlphaTitle">
                 <property name="text">
                  <string>Alpha</string>
                 </property>
@@ -665,7 +626,7 @@ color: rgb(235, 235, 235);</string>
             </widget>
            </item>
            <item>
-            <widget class="QWidget" name="w_RedOptionsRow_3" native="true">
+            <widget class="QWidget" name="w_AlphaOptionsRow" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -679,19 +640,6 @@ color: rgb(235, 235, 235);</string>
                  <string>Isolate?</string>
                 </property>
                </widget>
-              </item>
-              <item>
-               <spacer name="horizontalSpacer_3">
-                <property name="orientation">
-                 <enum>Qt::Orientation::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>310</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
               </item>
               <item>
                <widget class="QCheckBox" name="tggle_Invert_3">
@@ -710,6 +658,31 @@ color: rgb(235, 235, 235);</string>
          <widget class="QPushButton" name="btn_Export">
           <property name="text">
            <string>Export</string>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="img_tool">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="resources.qrc">:/resources/banner_app.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -800,7 +773,7 @@ color: rgb(235, 235, 235)</string>
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="btn_r">
+               <widget class="QCheckBox" name="btn_r">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -813,7 +786,7 @@ color: rgb(235, 235, 235)</string>
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="btn_g">
+               <widget class="QCheckBox" name="btn_g">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -826,7 +799,7 @@ color: rgb(235, 235, 235)</string>
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="btn_b">
+               <widget class="QCheckBox" name="btn_b">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -839,7 +812,7 @@ color: rgb(235, 235, 235)</string>
                </widget>
               </item>
               <item>
-               <widget class="QRadioButton" name="btn_a">
+               <widget class="QCheckBox" name="btn_a">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
