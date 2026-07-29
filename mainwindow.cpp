@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("PaniCPacker");
 
     //Set initial size
-    resize(1000,650);
+    resize(908,634);
 
     ui->setupUi(this);
 }

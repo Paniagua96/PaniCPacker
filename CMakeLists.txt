@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 3.19)
 project(PaniCPacker LANGUAGES CXX)
 
+#Compile QT UI
+set(CMAKE_AUTOUIC ON)
+
+#Compile QT Signals, functions, etc.
+set(CMAKE_AUTOMOC ON)
+
+#Compile resources in  general
+set(CMAKE_AUTORCC ON)
+
 find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
 
 qt_standard_project_setup()
