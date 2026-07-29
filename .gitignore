@@ -82,3 +82,8 @@ CMakeLists.txt.user*
 .uic/
 /build*/
 /.qtcreator/
+
+
+# Exclude custom folders
+_ExtraResources/
+_ExtraResources/*
