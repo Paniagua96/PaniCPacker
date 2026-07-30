@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QLabel>
+
+#include "channelstate.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,7 +24,24 @@ public:
 private:
     Ui::MainWindow *ui;
 
+
+    ChannelState redChannel {TextureChannel::Red};
+    ChannelState greenChannel {TextureChannel::Green};
+    ChannelState blueChannel {TextureChannel::Blue};
+    ChannelState alphaChannel {TextureChannel::Alpha};
+
+    int outputSize;
+
+    void loadChannelTexture(ChannelState &channel);
+    void removeChannelTexture(ChannelState &channel);
+    void updatePreview();
+    void updateChannelThumbnail(
+        const ChannelState &channel,
+        QLabel *label
+        );
+    void setIsolatedChannel(TextureChannel channel, bool enabled);
+    ChannelState *channelState(TextureChannel channel);
+
 private slots:
-    void exportTexture();
 };
 #endif // MAINWINDOW_H

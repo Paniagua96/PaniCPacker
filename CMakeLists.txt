@@ -21,6 +21,9 @@ qt_add_executable(PaniCPacker
     mainwindow.h
     mainwindow.ui
     resources.qrc
+    channelstate.h
+    textureprocessor.h
+    textureprocessor.cpp
 )
 
 target_link_libraries(PaniCPacker

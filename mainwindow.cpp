@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Set initial size
     resize(960,570);
 
+    //Build using main window.ui (ui from designer)
     ui->setupUi(this);
 }
 

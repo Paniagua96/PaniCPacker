@@ -250,7 +250,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
-               <widget class="QLabel" name="lbl_RedPreview_4">
+               <widget class="QLabel" name="lbl_RedPreview">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -272,21 +272,21 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lbl_RedTitle_4">
+               <widget class="QLabel" name="lbl_RedTitle">
                 <property name="text">
                  <string>Red</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Remove_4">
+               <widget class="QPushButton" name="btn_RedRemove">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Load_4">
+               <widget class="QPushButton" name="btn_RedLoad">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -312,7 +312,7 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="tggle_Invert_4">
+               <widget class="QCheckBox" name="tggle_RedInvert">
                 <property name="text">
                  <string>Invert?</string>
                 </property>
@@ -364,7 +364,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_3">
               <item>
-               <widget class="QLabel" name="lbl_RedPreview">
+               <widget class="QLabel" name="lbl_GreenPreview">
                 <property name="maximumSize">
                  <size>
                   <width>32</width>
@@ -380,7 +380,7 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lbl_RedTitle">
+               <widget class="QLabel" name="lbl_GreenTitle">
                 <property name="styleSheet">
                  <string notr="true">fontcolor:rgb(241, 241, 241)</string>
                 </property>
@@ -390,14 +390,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Remove">
+               <widget class="QPushButton" name="btn_GreenRemove">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Load">
+               <widget class="QPushButton" name="btn_GreenLoad">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -416,14 +416,14 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QCheckBox" name="tggle_Isolate">
+               <widget class="QCheckBox" name="tggle_GreenIsolate">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="tggle_Invert">
+               <widget class="QCheckBox" name="tggle_GreenInvert">
                 <property name="text">
                  <string>Invert?</string>
                 </property>
@@ -475,7 +475,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QLabel" name="lbl_RedPreview_2">
+               <widget class="QLabel" name="lbl_BluePreview">
                 <property name="maximumSize">
                  <size>
                   <width>32</width>
@@ -491,21 +491,21 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lbl_RedTitle_2">
+               <widget class="QLabel" name="lbl_BlueTitle">
                 <property name="text">
                  <string>Blue</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Remove_2">
+               <widget class="QPushButton" name="btn_BlueRemove_">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Load_2">
+               <widget class="QPushButton" name="btn_BlueLoad">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -524,14 +524,14 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QCheckBox" name="tggle_Isolate_2">
+               <widget class="QCheckBox" name="tggle_BlueIsolate">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="tggle_Invert_2">
+               <widget class="QCheckBox" name="tggle_BlueInvert">
                 <property name="text">
                  <string>Invert?</string>
                 </property>
@@ -609,14 +609,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Remove_3">
+               <widget class="QPushButton" name="btn_AlphaRemove">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_Load_3">
+               <widget class="QPushButton" name="btn_AlphaLoad">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -635,14 +635,14 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QCheckBox" name="tggle_Isolate_3">
+               <widget class="QCheckBox" name="tggle_AlphaIsolate">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QCheckBox" name="tggle_Invert_3">
+               <widget class="QCheckBox" name="tggle_AlphaInvert">
                 <property name="text">
                  <string>Invert?</string>
                 </property>
