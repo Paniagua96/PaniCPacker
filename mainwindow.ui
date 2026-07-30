@@ -135,13 +135,28 @@ color: rgb(235, 235, 235);</string>
            </item>
            <item>
             <widget class="QWidget" name="_3_w_PresetSelector" native="true">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>15</number>
+              </property>
               <item>
                <widget class="QLabel" name="lbl_Presets">
                 <property name="sizePolicy">
@@ -155,10 +170,10 @@ color: rgb(235, 235, 235);</string>
                 </property>
                </widget>
               </item>
-              <item>
+              <item alignment="Qt::AlignmentFlag::AlignTop">
                <widget class="QComboBox" name="cb_Presets">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -194,7 +209,7 @@ color: rgb(235, 235, 235);</string>
              </layout>
             </widget>
            </item>
-           <item>
+           <item alignment="Qt::AlignmentFlag::AlignBottom">
             <widget class="QLabel" name="lbl_PresetDescription">
              <property name="font">
               <font>
@@ -279,14 +294,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_RedRemove">
+               <widget class="QPushButton" name="btn_RedLoad">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_RedLoad">
+               <widget class="QPushButton" name="btn_RedRemove">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -305,7 +320,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_10">
               <item>
-               <widget class="QCheckBox" name="tggle_Isolate_4">
+               <widget class="QCheckBox" name="tggle_RedIsolated">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
@@ -382,7 +397,7 @@ color: rgb(235, 235, 235);</string>
               <item>
                <widget class="QLabel" name="lbl_GreenTitle">
                 <property name="styleSheet">
-                 <string notr="true">fontcolor:rgb(241, 241, 241)</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Green</string>
@@ -390,14 +405,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_GreenRemove">
+               <widget class="QPushButton" name="btn_GreenLoad">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_GreenLoad">
+               <widget class="QPushButton" name="btn_GreenRemove">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -416,7 +431,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
               <item>
-               <widget class="QCheckBox" name="tggle_GreenIsolate">
+               <widget class="QCheckBox" name="tggle_GreenIsolated">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
@@ -498,14 +513,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_BlueRemove_">
+               <widget class="QPushButton" name="btn_BlueLoad">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_BlueLoad">
+               <widget class="QPushButton" name="btn_BlueRemove">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -524,7 +539,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_6">
               <item>
-               <widget class="QCheckBox" name="tggle_BlueIsolate">
+               <widget class="QCheckBox" name="tggle_BlueIsolated">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
@@ -609,14 +624,14 @@ color: rgb(235, 235, 235);</string>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_AlphaRemove">
+               <widget class="QPushButton" name="btn_AlphaLoad">
                 <property name="text">
                  <string>Load</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="btn_AlphaLoad">
+               <widget class="QPushButton" name="btn_AlphaRemove">
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -635,7 +650,7 @@ color: rgb(235, 235, 235);</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_8">
               <item>
-               <widget class="QCheckBox" name="tggle_AlphaIsolate">
+               <widget class="QCheckBox" name="tggle_AlphaIsolated">
                 <property name="text">
                  <string>Isolate?</string>
                 </property>
@@ -655,25 +670,63 @@ color: rgb(235, 235, 235);</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_Export">
-          <property name="text">
-           <string>Export</string>
+         <widget class="QFrame" name="frame">
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
           </property>
-          <property name="checkable">
-           <bool>false</bool>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
           </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <widget class="QLabel" name="lbl_ExportSize">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Export Size:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="cb_OutputSize"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_Export">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(255, 253, 255);
+color: rgb(30, 30, 30);</string>
+             </property>
+             <property name="text">
+              <string>Export</string>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignmentFlag::AlignHCenter">
          <widget class="QLabel" name="img_tool">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>249</width>
+            <height>57</height>
+           </size>
           </property>
           <property name="text">
            <string/>
@@ -702,6 +755,18 @@ color: rgb(235, 235, 235)</string>
        <layout class="QVBoxLayout" name="verticalLayout_8">
         <item>
          <widget class="QFrame" name="f_header">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>95</height>
+           </size>
+          </property>
           <property name="frameShape">
            <enum>QFrame::Shape::StyledPanel</enum>
           </property>
@@ -831,7 +896,7 @@ color: rgb(235, 235, 235)</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="lbl_MainPreview">
           <property name="text">
            <string/>
           </property>
@@ -843,12 +908,20 @@ color: rgb(235, 235, 235)</string>
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="value">
+           <number>24</number>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </widget>
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <resources>
   <include location="resources.qrc"/>

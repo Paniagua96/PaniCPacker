@@ -3,6 +3,7 @@
 
 bool TextureProcessor::isPowerOfTwo(int value)
 {
+    //Check if texture has a valid size and if the module is 0 to know if it is power of two
     return value > 0 && (value &(value - 1)) == 0;
 }
 
@@ -48,4 +49,47 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
     {
         result.invertPixels();
     }
+
+    return result;
+}
+
+QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const ChannelState &green, const ChannelState &blue, const ChannelState &alpha, const QSize &outputSize)
+{
+    //Get images in grayscale and correct size
+    const QImage redImage = prepareChannelImage(red,outputSize);
+    const QImage greenImage = prepareChannelImage(green,outputSize);
+    const QImage blueImage = prepareChannelImage(blue,outputSize);
+    const QImage alphaImage = prepareChannelImage(alpha,outputSize);
+
+    //Var to save the final result
+    QImage output(outputSize,QImage::Format_RGB888);
+
+    for (int y = 0; y < output.height(); ++y) {
+        const uchar *redLine = redImage.constScanLine(y);
+        const uchar *greenLine = greenImage.constScanLine(y);
+        const uchar *blueLine = blueImage.constScanLine(y);
+        const uchar *alphaLine = alphaImage.constScanLine(y);
+
+        uchar *outputLine = output.scanLine(y);
+
+        for (int x = 0; x < output.width(); ++x) {
+            const int outputIndex = x * 4;
+
+            outputLine[outputIndex + 0] = redLine[x];
+            outputLine[outputIndex + 1] = greenLine[x];
+            outputLine[outputIndex + 2] = blueLine[x];
+            outputLine[outputIndex + 3] = alphaLine[x];
+        }
+    }
+
+    return output;
+
+}
+
+QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const QSize &outputSize)
+{
+    //Create variable to save the channel to be isolated
+    const QImage gray = prepareChannelImage(channel,outputSize);
+
+    return gray.convertToFormat(QImage::Format_RGB888);
 }

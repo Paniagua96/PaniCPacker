@@ -24,6 +24,8 @@ qt_add_executable(PaniCPacker
     channelstate.h
     textureprocessor.h
     textureprocessor.cpp
+    exportservice.h
+    exportservice.cpp
 )
 
 target_link_libraries(PaniCPacker

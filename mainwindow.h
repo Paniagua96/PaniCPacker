@@ -24,7 +24,6 @@ public:
 private:
     Ui::MainWindow *ui;
 
-
     ChannelState redChannel {TextureChannel::Red};
     ChannelState greenChannel {TextureChannel::Green};
     ChannelState blueChannel {TextureChannel::Blue};
@@ -32,15 +31,23 @@ private:
 
     int outputSize;
 
+    void initializeChannels();
+    void setupConnections();
+    void setupPresets();
+    void setupOutputSizes();
+
     void loadChannelTexture(ChannelState &channel);
     void removeChannelTexture(ChannelState &channel);
-    void updatePreview();
-    void updateChannelThumbnail(
-        const ChannelState &channel,
-        QLabel *label
-        );
+    void updateChannelThumbnail(const ChannelState &channel, QLabel *label);
     void setIsolatedChannel(TextureChannel channel, bool enabled);
     ChannelState *channelState(TextureChannel channel);
+
+    void updatePreview();
+
+    const ChannelState *isolatedChannel() const;
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 private slots:
 };

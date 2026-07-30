@@ -24,7 +24,7 @@ struct ChannelState
 
     bool hasTexture;
     bool inverted;
-    bool isolate;
+    bool isolated;
     bool previewEnabled = true;
 };
 
