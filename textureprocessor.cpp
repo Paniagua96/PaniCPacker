@@ -1,5 +1,4 @@
 #include "textureprocessor.h"
-#include <qdebug.h>
 
 
 bool TextureProcessor::isPowerOfTwo(int value)
@@ -88,9 +87,18 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
     return result;
 }
 
+
+QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const QSize &outputSize)
+{
+    //Create variable to save the channel to be isolated
+    const QImage gray = prepareChannelImage(channel,outputSize);
+
+    return gray.convertToFormat(QImage::Format_RGB888);
+}
+
 QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const ChannelState &green, const ChannelState &blue, const ChannelState &alpha, const QSize &outputSize)
 {
-    //Get images in grayscale and correct size
+    //Get images with their pixel values
     const QImage redImage = prepareChannelImage(red,outputSize);
     const QImage greenImage = prepareChannelImage(green,outputSize);
     const QImage blueImage = prepareChannelImage(blue,outputSize);
@@ -99,6 +107,7 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
     //Var to save the final result
     QImage output(outputSize,QImage::Format_RGBA8888);
 
+    //Write each pixel for each channel with their values
     for (int y = 0; y < output.height(); ++y) {
         const uchar *redLine = redImage.constScanLine(y);
         const uchar *greenLine = greenImage.constScanLine(y);
@@ -118,13 +127,5 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
     }
 
     return output;
-
 }
 
-QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const QSize &outputSize)
-{
-    //Create variable to save the channel to be isolated
-    const QImage gray = prepareChannelImage(channel,outputSize);
-
-    return gray.convertToFormat(QImage::Format_RGB888);
-}

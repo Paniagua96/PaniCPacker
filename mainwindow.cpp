@@ -1,14 +1,18 @@
 #include "ui_mainwindow.h"
 #include "mainwindow.h"
 
+
 #include "channelstate.h"
 #include "textureprocessor.h"
 #include "exportservice.h"
+
+#include <qdebug.h>
 
 #include <QLabel>
 #include <QFileDialog>
 #include <QPixmap>
 #include <QMessageBox>
+#include <QLineEdit>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -376,7 +380,17 @@ void MainWindow::setupConnections()
                 );
         }
         );
-        #pragma endregion ChannelALPHA
+#pragma endregion ChannelALPHA
+
+    connect(
+        ui->cb_OutputSize,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            outputSize = ui->cb_OutputSize->currentData().toInt();
+            qDebug()<<outputSize;
+        });
 
     connect(
         ui -> btn_Export,
