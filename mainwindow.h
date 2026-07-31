@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include <QLabel>
+#include <QMessageBox>
 
 #include "channelstate.h"
 
@@ -35,6 +36,11 @@ private:
     void setupConnections();
     void setupPresets();
     void setupOutputSizes();
+    void showStyledMessage(
+        QMessageBox::Icon icon,
+        const QString &title,
+        const QString &message
+    );
 
     void loadChannelTexture(ChannelState &channel);
     void removeChannelTexture(ChannelState &channel);

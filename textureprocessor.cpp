@@ -1,4 +1,5 @@
 #include "textureprocessor.h"
+#include <qdebug.h>
 
 
 bool TextureProcessor::isPowerOfTwo(int value)
@@ -31,8 +32,42 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
 
     if(channel.hasTexture && !channel.sourceImage.isNull())
     {
+        //Create a new image to write info with the texture channel
+        QImage source = channel.sourceImage.convertToFormat(QImage::Format_RGBA8888);
+
         //Convert grayscale
-        result = channel.sourceImage.convertToFormat(QImage::Format_Grayscale8);
+        result = QImage(source.size(),QImage::Format_Grayscale8);
+
+        for (int y = 0; y < source.height(); ++y) {
+
+            uchar* resultLine = result.scanLine(y);
+
+            for (int x = 0; x < source.width(); ++x) {
+                const QColor color = source.pixelColor(x, y);
+
+                int value = 0;
+
+                //Extract pixel value for each channel
+                switch (channel.channel) {
+                case TextureChannel::Red:
+                    value = color.red();
+                    break;
+                case TextureChannel::Green:
+                    value = color.green();
+                    break;
+                case TextureChannel::Blue:
+                    value = color.blue();
+                    break;
+                case TextureChannel::Alpha:
+                    value = color.alpha();
+                    break;
+                }
+
+                //Save true value of pixel
+                resultLine[x] = static_cast<uchar>(value);
+            }
+        }
+
 
         //Scale it from output size value
         result = result.scaled(outputSize, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -62,7 +97,7 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
     const QImage alphaImage = prepareChannelImage(alpha,outputSize);
 
     //Var to save the final result
-    QImage output(outputSize,QImage::Format_RGB888);
+    QImage output(outputSize,QImage::Format_RGBA8888);
 
     for (int y = 0; y < output.height(); ++y) {
         const uchar *redLine = redImage.constScanLine(y);

@@ -411,20 +411,20 @@ void MainWindow::setupConnections()
             if (success) {
                 ui->progressBar->setValue(100);
 
-                QMessageBox::information(
-                    this,
+                showStyledMessage(
+                    QMessageBox::Information,
                     tr("Export complete"),
                     tr("The packed texture was exported.")
-                    );
+                );
             } else {
                 ui->progressBar->setValue(0);
 
                 if (!errorMessage.isEmpty()) {
-                    QMessageBox::warning(
-                        this,
+                    showStyledMessage(
+                        QMessageBox::Warning,
                         tr("Export failed"),
                         errorMessage
-                        );
+                    );
                 }
             }
         });
@@ -487,19 +487,19 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
 
     //Error loading image
     if (loadedImage.isNull()) {
-        QMessageBox::warning(
-            this,
+        showStyledMessage(
+            QMessageBox::Warning,
             tr("Invalid image"),
             tr("The selected file could not be loaded.")
-            );
+        );
         return;
     }
 
     //It is not square texture
     if (!TextureProcessor::isValidSourceImage(loadedImage)) {
-        QMessageBox::warning(
-            this,
-            tr("Invalid texture size"),
+        showStyledMessage(
+            QMessageBox::Warning,
+            tr("Invalid texture size: %1 x %2").arg(loadedImage.width()).arg(loadedImage.height()),
             tr(
                 "The texture must be square and use a "
                 "power-of-two resolution."
@@ -514,6 +514,30 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.hasTexture = true;
 
     updatePreview();
+}
+
+void MainWindow::showStyledMessage(
+    QMessageBox::Icon icon,
+    const QString &title,
+    const QString &message
+)
+{
+    QMessageBox messageBox(this);
+    messageBox.setIcon(icon);
+    messageBox.setWindowTitle(title);
+    messageBox.setText(message);
+    messageBox.setStyleSheet(
+        "QMessageBox { background-color: rgb(30, 30, 30); }"
+        "QLabel { color: rgb(235, 235, 235); }"
+        "QPushButton {"
+        "  color: rgb(235, 235, 235);"
+        "  background-color: rgb(70, 70, 70);"
+        "  border: 1px solid rgb(100, 100, 100);"
+        "  padding: 5px 12px;"
+        "}"
+        "QPushButton:hover { background-color: rgb(90, 90, 90); }"
+    );
+    messageBox.exec();
 }
 
 void MainWindow::removeChannelTexture(ChannelState &channel)
