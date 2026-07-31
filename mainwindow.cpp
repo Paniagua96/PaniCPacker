@@ -61,10 +61,10 @@ void MainWindow::initializeChannels()
     ui->tggle_RedInvert->setChecked(false);
     ui->tggle_RedIsolated->setChecked(false);
 
-    ui->btn_r->setChecked(true);
-    ui->btn_g->setChecked(true);
-    ui->btn_b->setChecked(true);
-    ui->btn_a->setChecked(true);
+    ui->tggl_preview_r->setChecked(true);
+    ui->tggl_preview_g->setChecked(true);
+    ui->tggl_preview_b->setChecked(true);
+    ui->tggl_preview_a->setChecked(true);
 
     updateChannelThumbnail(
         redChannel,
@@ -428,6 +428,48 @@ void MainWindow::setupConnections()
                 }
             }
         });
+
+#pragma region PreviewToggles
+    connect(
+        ui->tggl_preview_r,
+        &QCheckBox::toggled,
+        this,
+        [this](bool checked)
+        {
+            redChannel.previewEnabled = checked;
+            updatePreview();
+        });
+
+    connect(
+        ui->tggl_preview_g,
+        &QCheckBox::toggled,
+        this,
+        [this](bool checked)
+        {
+            greenChannel.previewEnabled = checked;
+            updatePreview();
+        });
+
+    connect(
+        ui->tggl_preview_b,
+        &QCheckBox::toggled,
+        this,
+        [this](bool checked)
+        {
+            blueChannel.previewEnabled = checked;
+            updatePreview();
+        });
+
+    connect(
+        ui->tggl_preview_a,
+        &QCheckBox::toggled,
+        this,
+        [this](bool checked)
+        {
+            alphaChannel.previewEnabled = checked;
+            updatePreview();
+        });
+#pragma endregion PreviewToggles
 }
 
 void MainWindow::setupPresets()
