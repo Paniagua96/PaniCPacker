@@ -59,7 +59,7 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
                     value = color.blue();
                     break;
                 case TextureChannel::Alpha:
-                    value = color.alpha();
+                    value = color.red(); // Info most of times will come the same for each channel
                     break;
                 }
 

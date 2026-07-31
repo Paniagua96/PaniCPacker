@@ -384,7 +384,7 @@ color: rgb(235, 235, 235);</string>
               <item>
                <widget class="QLabel" name="lbl_RedTitle">
                 <property name="text">
-                 <string>Red</string>
+                 <string>Red channel</string>
                 </property>
                </widget>
               </item>
@@ -553,7 +553,7 @@ selection-color: rgb(255, 0, 0);</string>
                  <string notr="true"/>
                 </property>
                 <property name="text">
-                 <string>Green</string>
+                 <string>Green channel</string>
                 </property>
                </widget>
               </item>
@@ -717,7 +717,7 @@ selection-color: rgb(255, 0, 0);</string>
               <item>
                <widget class="QLabel" name="lbl_BlueTitle">
                 <property name="text">
-                 <string>Blue</string>
+                 <string>Blue channel</string>
                 </property>
                </widget>
               </item>
@@ -884,7 +884,7 @@ selection-color: rgb(255, 0, 0);</string>
               <item>
                <widget class="QLabel" name="lbl_AlphaTitle">
                 <property name="text">
-                 <string>Alpha</string>
+                 <string>Alpha channel</string>
                 </property>
                </widget>
               </item>
