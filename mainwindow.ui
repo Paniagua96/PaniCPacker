@@ -189,7 +189,7 @@ color: rgb(235, 235, 235);</string>
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>15</number>
+                 <number>3</number>
                 </property>
                 <item alignment="Qt::AlignmentFlag::AlignVCenter">
                  <widget class="QPushButton" name="btn_StartFromImg">
@@ -237,6 +237,9 @@ color: rgb(30, 30, 30);</string>
                   </property>
                   <property name="text">
                    <string>Presets guide:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -319,19 +322,19 @@ color: rgb(30, 30, 30);</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <property name="spacing">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
            </property>
            <property name="topMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <item>
             <widget class="QWidget" name="w_RedMainRow" native="true">
@@ -426,6 +429,12 @@ color: rgb(30, 30, 30);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_RedLoad">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(83, 83, 83);
 selection-background-color: rgb(0, 255, 0);
@@ -441,6 +450,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_RedRemove">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -494,19 +509,19 @@ selection-color: rgb(255, 0, 0);</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
            </property>
            <property name="topMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <item>
             <widget class="QWidget" name="w_GreenMainRow" native="true">
@@ -595,6 +610,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_GreenLoad">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(83, 83, 83);</string>
                 </property>
@@ -608,6 +629,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_GreenRemove">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -661,19 +688,19 @@ selection-color: rgb(255, 0, 0);</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
            </property>
            <property name="topMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <item>
             <widget class="QWidget" name="w_BlueMainRow" native="true">
@@ -759,6 +786,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_BlueLoad">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(83, 83, 83);</string>
                 </property>
@@ -772,6 +805,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_BlueRemove">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -825,19 +864,19 @@ selection-color: rgb(255, 0, 0);</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <property name="spacing">
-            <number>4</number>
+            <number>0</number>
            </property>
            <property name="leftMargin">
             <number>6</number>
            </property>
            <property name="topMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <property name="rightMargin">
             <number>6</number>
            </property>
            <property name="bottomMargin">
-            <number>6</number>
+            <number>0</number>
            </property>
            <item>
             <widget class="QWidget" name="w_AlphaMainRow" native="true">
@@ -926,6 +965,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_AlphaLoad">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(83, 83, 83);</string>
                 </property>
@@ -939,6 +984,12 @@ selection-color: rgb(255, 0, 0);</string>
               </item>
               <item>
                <widget class="QPushButton" name="btn_AlphaRemove">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Remove</string>
                 </property>
@@ -977,7 +1028,7 @@ selection-color: rgb(255, 0, 0);</string>
          </widget>
         </item>
         <item>
-         <widget class="QFrame" name="frame">
+         <widget class="QFrame" name="f_ExportSettings">
           <property name="frameShape">
            <enum>QFrame::Shape::StyledPanel</enum>
           </property>
@@ -986,68 +1037,254 @@ selection-color: rgb(255, 0, 0);</string>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
            <item>
-            <widget class="QLabel" name="lbl_ExportSize">
+            <widget class="QFrame" name="f_ExportSize">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text">
-              <string>Export Size:</string>
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
              </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item alignment="Qt::AlignmentFlag::AlignHCenter">
+               <widget class="QLabel" name="lbl_ExportSize">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Export Size:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="f_width">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_13">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lbl_width">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Width  -&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="cb_OutputSize_width">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(83, 83, 83);</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="f_height">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lbl_height">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>Height -&gt;</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="cb_OutputSize_height">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgb(83, 83, 83);</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="cb_OutputSize">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(83, 83, 83);</string>
+            <widget class="QFrame" name="f_outputSize">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="btn_Export">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 253, 255);
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Raised</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="btn_overwrite">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(150, 150, 150);
 color: rgb(30, 30, 30);</string>
-             </property>
-             <property name="text">
-              <string>Export</string>
-             </property>
-             <property name="checkable">
-              <bool>false</bool>
-             </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
+                </property>
+                <property name="text">
+                 <string>Overwrite</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="btn_Export">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 253, 255);
+color: rgb(30, 30, 30);</string>
+                </property>
+                <property name="text">
+                 <string>Export</string>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+                <property name="flat">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item alignment="Qt::AlignmentFlag::AlignHCenter">
-         <widget class="QLabel" name="img_tool">
+        <item>
+         <widget class="QFrame" name="frame">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>249</width>
-            <height>57</height>
-           </size>
+          <property name="frameShape">
+           <enum>QFrame::Shape::NoFrame</enum>
           </property>
-          <property name="text">
-           <string/>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
           </property>
-          <property name="pixmap">
-           <pixmap resource="resources.qrc">:/resources/banner_app.png</pixmap>
-          </property>
-          <property name="scaledContents">
-           <bool>true</bool>
-          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="img_tool">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>249</width>
+               <height>57</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources.qrc">:/resources/banner_app.png</pixmap>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="label">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(124, 124, 124);</string>
+             </property>
+             <property name="text">
+              <string>Developed by Diego Paniagua</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -1290,11 +1527,14 @@ color: rgb(235, 235, 235)</string>
         </item>
         <item>
          <widget class="QLabel" name="lbl_MainPreview">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(206, 206, 206);</string>
+          </property>
           <property name="text">
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="resources.qrc">:/resources/background.png</pixmap>
+           <pixmap>:/resources/background.png</pixmap>
           </property>
           <property name="scaledContents">
            <bool>true</bool>
@@ -1302,10 +1542,46 @@ color: rgb(235, 235, 235)</string>
          </widget>
         </item>
         <item>
-         <widget class="QProgressBar" name="progressBar">
-          <property name="value">
-           <number>24</number>
+         <widget class="QFrame" name="f_textureinfo">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>35</height>
+           </size>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Shape::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Shadow::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <property name="topMargin">
+            <number>3</number>
+           </property>
+           <property name="bottomMargin">
+            <number>3</number>
+           </property>
+           <item alignment="Qt::AlignmentFlag::AlignHCenter">
+            <widget class="QLabel" name="lbl_texInfo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Info texture: ----------------------</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>

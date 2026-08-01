@@ -13,6 +13,7 @@
 #include <QPixmap>
 #include <QMessageBox>
 #include <QLineEdit>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -32,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent)
     setupOutputSizes();
     initializeChannels();
     setupConnections();
+    ui->btn_overwrite->setEnabled(false);
+    ui->statusBar->setStyleSheet(
+        "QStatusBar { color: rgb(235, 235, 235); background-color: rgb(30, 30, 30); }"
+    );
+    updateTextureInfo();
     updatePreview();
 }
 
@@ -401,12 +407,23 @@ void MainWindow::setupConnections()
 #pragma endregion ChannelALPHA
 
     connect(
-        ui->cb_OutputSize,
+        ui->cb_OutputSize_width,
         &QComboBox::activated,
         this,
         [this](int index)
         {
-            outputSize = ui->cb_OutputSize->currentData().toInt();
+            outputSize_width = ui->cb_OutputSize_width->currentData().toInt();
+            updateTextureInfo();
+        });
+
+    connect(
+        ui->cb_OutputSize_height,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            outputSize_height = ui->cb_OutputSize_height->currentData().toInt();
+            updateTextureInfo();
         });
 
     connect(
@@ -415,20 +432,7 @@ void MainWindow::setupConnections()
         this,
         [this]()
         {
-            ui->progressBar->setValue(10);
-
-            const QSize _outputSize(outputSize, outputSize);
-
-            const QImage packedImage =
-                TextureProcessor::buildPackedTexture(
-                    redChannel,
-                    greenChannel,
-                    blueChannel,
-                    alphaChannel,
-                    _outputSize
-                    );
-
-            ui->progressBar->setValue(70);
+            const QImage packedImage = buildCurrentPackedTexture();
 
             QString errorMessage;
 
@@ -436,11 +440,17 @@ void MainWindow::setupConnections()
                 ExportService::exportImage(
                     this,
                     packedImage,
-                    &errorMessage
+                    &errorMessage,
+                    &lastExportPath
                     );
 
             if (success) {
-                ui->progressBar->setValue(100);
+                ui->btn_overwrite->setEnabled(true);
+                ui->btn_overwrite->setToolTip(lastExportPath);
+                ui->statusBar->showMessage(
+                    tr("Exported: %1").arg(QFileInfo(lastExportPath).fileName()),
+                    3000
+                );
 
                 showStyledMessage(
                     QMessageBox::Information,
@@ -448,7 +458,6 @@ void MainWindow::setupConnections()
                     tr("The packed texture was exported.")
                 );
             } else {
-                ui->progressBar->setValue(0);
 
                 if (!errorMessage.isEmpty()) {
                     showStyledMessage(
@@ -459,6 +468,33 @@ void MainWindow::setupConnections()
                 }
             }
         });
+
+    connect(
+        ui->btn_overwrite,
+        &QPushButton::clicked,
+        this,
+        [this]()
+        {
+            const QImage packedImage = buildCurrentPackedTexture();
+            QString errorMessage;
+
+            const bool success =
+                ExportService::overwriteImage(lastExportPath, packedImage, &errorMessage);
+
+            if (success) {
+                ui->statusBar->showMessage(
+                    tr("Overwritten: %1").arg(QFileInfo(lastExportPath).fileName()),
+                    3000
+                );
+            } else {
+                showStyledMessage(
+                    QMessageBox::Warning,
+                    tr("Overwrite failed"),
+                    errorMessage
+                );
+            }
+        }
+    );
 
 #pragma region PreviewToggles
     connect(
@@ -531,18 +567,78 @@ void MainWindow::setupPresets()
 
 void MainWindow::setupOutputSizes()
 {
-    ui->cb_OutputSize->clear();
+    //Combo box width
+    ui->cb_OutputSize_width->clear();
+    
+    ui->cb_OutputSize_width->addItem("128", 128);
+    ui->cb_OutputSize_width->addItem("256", 256);
+    ui->cb_OutputSize_width->addItem("512", 512);
+    ui->cb_OutputSize_width->addItem("1024", 1024);
+    ui->cb_OutputSize_width->addItem("2048", 2048);
+    ui->cb_OutputSize_width->addItem("4096", 4096);
+    
+    ui->cb_OutputSize_width->setCurrentIndex(3);
 
-    ui->cb_OutputSize->addItem("128 × 128", 128);
-    ui->cb_OutputSize->addItem("256 × 256", 256);
-    ui->cb_OutputSize->addItem("512 × 512", 512);
-    ui->cb_OutputSize->addItem("1024 × 1024", 1024);
-    ui->cb_OutputSize->addItem("2048 × 2048", 2048);
-    ui->cb_OutputSize->addItem("4096 × 4096", 4096);
+    outputSize_width = 1024;
+    
+    //Combo box height
+    ui->cb_OutputSize_height->clear();
 
-    ui->cb_OutputSize->setCurrentIndex(3);
+    ui->cb_OutputSize_height->addItem("128", 128);
+    ui->cb_OutputSize_height->addItem("256", 256);
+    ui->cb_OutputSize_height->addItem("512", 512);
+    ui->cb_OutputSize_height->addItem("1024", 1024);
+    ui->cb_OutputSize_height->addItem("2048", 2048);
+    ui->cb_OutputSize_height->addItem("4096", 4096);
 
-    outputSize = 1024;
+    ui->cb_OutputSize_height->setCurrentIndex(3);
+
+    outputSize_height = 1024;
+}
+
+QImage MainWindow::buildCurrentPackedTexture() const
+{
+    return TextureProcessor::buildPackedTexture(
+        redChannel,
+        greenChannel,
+        blueChannel,
+        alphaChannel,
+        QSize(outputSize_width, outputSize_height)
+    );
+}
+
+void MainWindow::updateTextureInfo()
+{
+    const qint64 outputBytes =
+        static_cast<qint64>(outputSize_width) * outputSize_height * 4;
+    const double outputMegabytes =
+        static_cast<double>(outputBytes) / (1024.0 * 1024.0);
+
+    if (infoSourceImage.isNull()) {
+        ui->lbl_texInfo->setText(
+            tr("No source texture loaded\n"
+               "Output: %1 x %2 | Uncompressed: %3 MB (RGBA8)")
+                .arg(outputSize_width)
+                .arg(outputSize_height)
+                .arg(outputMegabytes, 0, 'f', 2)
+        );
+        return;
+    }
+
+    const QFileInfo sourceFileInfo(infoSourcePath);
+    const double diskMegabytes =
+        static_cast<double>(sourceFileInfo.size()) / (1024.0 * 1024.0);
+
+    ui->lbl_texInfo->setText(
+        tr("Source: %1 x %2 | Disk: %3 MB\n"
+           "Output: %4 x %5 | Uncompressed: %6 MB (RGBA8)")
+            .arg(infoSourceImage.width())
+            .arg(infoSourceImage.height())
+            .arg(diskMegabytes, 0, 'f', 2)
+            .arg(outputSize_width)
+            .arg(outputSize_height)
+            .arg(outputMegabytes, 0, 'f', 2)
+    );
 }
 
 void MainWindow::loadChannelTexture(ChannelState &channel)
@@ -586,6 +682,10 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.sourcePath = filePath;
     channel.hasTexture = true;
     channel.alphaComesFromAlphaChannel = false;
+
+    infoSourceImage = loadedImage;
+    infoSourcePath = filePath;
+    updateTextureInfo();
 
     updatePreview();
 }
@@ -668,6 +768,10 @@ void MainWindow::loadChannelsFromTexture()
     alphaChannel.hasTexture = true;
     alphaChannel.alphaComesFromAlphaChannel = true;
 
+    infoSourceImage = loadedImage;
+    infoSourcePath = filePath;
+    updateTextureInfo();
+
     //Update previews thumbails
     updateChannelThumbnail(redChannel, ui->img_RedPreview);
     updateChannelThumbnail(greenChannel, ui->img_GreenPreview);
@@ -732,7 +836,7 @@ void MainWindow::setIsolatedChannel(TextureChannel channel, bool enabled)
 
 void MainWindow::updatePreview()
 {
-    const QSize previewResolution(outputSize, outputSize);
+    const QSize previewResolution(outputSize_width, outputSize_height);
 
     QImage previewImage;
 

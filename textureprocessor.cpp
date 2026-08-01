@@ -15,14 +15,11 @@ bool TextureProcessor::isValidSourceImage(const QImage &image)
         return false;
     }
 
-    //Check in case they have different size
-    if(image.width() != image.height())
-    {
-        return false;
-    }
+    //Check if texture is square
+    bool isSquareTexture = image.width() == image.height();
 
     //Check if width & height are power of two
-    return isPowerOfTwo(image.width()) && isPowerOfTwo(image.height());
+    return (isPowerOfTwo(image.width()) && isPowerOfTwo(image.height())) || isSquareTexture;
 }
 
 QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const QSize &outputSize)

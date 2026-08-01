@@ -30,12 +30,18 @@ private:
     ChannelState blueChannel {TextureChannel::Blue};
     ChannelState alphaChannel {TextureChannel::Alpha};
 
-    int outputSize;
+    int outputSize_width;
+    int outputSize_height;
+    QString lastExportPath;
+    QImage infoSourceImage;
+    QString infoSourcePath;
 
     void initializeChannels();
     void setupConnections();
     void setupPresets();
     void setupOutputSizes();
+    void updateTextureInfo();
+    QImage buildCurrentPackedTexture() const;
     void showStyledMessage(
         QMessageBox::Icon icon,
         const QString &title,
