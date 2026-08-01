@@ -62,6 +62,11 @@ void MainWindow::initializeChannels()
     blueChannel.isolated = false;
     alphaChannel.isolated = false;
 
+    redChannel.alphaComesFromAlphaChannel = false;
+    greenChannel.alphaComesFromAlphaChannel = false;
+    blueChannel.alphaComesFromAlphaChannel = false;
+    alphaChannel.alphaComesFromAlphaChannel = false;
+
     ui->tggle_RedInvert->setChecked(false);
     ui->tggle_RedIsolated->setChecked(false);
 
@@ -72,27 +77,40 @@ void MainWindow::initializeChannels()
 
     updateChannelThumbnail(
         redChannel,
-        ui->lbl_RedPreview
+        ui->img_RedPreview
         );
 
     updateChannelThumbnail(
         greenChannel,
-        ui->lbl_GreenPreview
+        ui->img_GreenPreview
         );
 
     updateChannelThumbnail(
         blueChannel,
-        ui->lbl_BluePreview
+        ui->img_BluePreview
         );
 
     updateChannelThumbnail(
         alphaChannel,
-        ui->lbl_AlphaPreview
+        ui->img_AlphaPreview
         );
 }
 
 void MainWindow::setupConnections()
 {
+    //Button start from texture
+    connect(
+        ui->btn_StartFromImg,
+        &QPushButton::clicked,
+        this,
+        [this]()
+        {
+            loadChannelsFromTexture();
+            updatePreview();
+        }
+        );
+
+
     // Combo box Preset
     connect(
         ui->cb_Presets, //Object to connect
@@ -115,7 +133,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 redChannel,
-                ui->lbl_RedPreview
+                ui->img_RedPreview
                 );
 
             updatePreview();
@@ -133,7 +151,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 redChannel,
-                ui->lbl_RedPreview
+                ui->img_RedPreview
                 );
 
             updatePreview();
@@ -151,7 +169,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 redChannel,
-                ui->lbl_RedPreview
+                ui->img_RedPreview
                 );
 
             updatePreview();
@@ -185,7 +203,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 greenChannel,
-                ui->lbl_GreenPreview
+                ui->img_GreenPreview
                 );
 
             updatePreview();
@@ -203,7 +221,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 greenChannel,
-                ui->lbl_GreenPreview
+                ui->img_GreenPreview
                 );            
 
             updatePreview();
@@ -221,7 +239,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 greenChannel,
-                ui->lbl_GreenPreview
+                ui->img_GreenPreview
                 );            
 
             updatePreview();
@@ -255,7 +273,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 blueChannel,
-                ui->lbl_BluePreview
+                ui->img_BluePreview
                 );
 
             updatePreview();
@@ -273,7 +291,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 blueChannel,
-                ui->lbl_BluePreview
+                ui->img_BluePreview
                 );
 
             updatePreview();
@@ -291,7 +309,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 blueChannel,
-                ui->lbl_BluePreview
+                ui->img_BluePreview
                 );
 
             updatePreview();
@@ -325,7 +343,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 alphaChannel,
-                ui->lbl_AlphaPreview
+                ui->img_AlphaPreview
                 );
 
             updatePreview();
@@ -343,7 +361,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 alphaChannel,
-                ui->lbl_AlphaPreview
+                ui->img_AlphaPreview
                 );            
             updatePreview();
         }
@@ -360,7 +378,7 @@ void MainWindow::setupConnections()
 
             updateChannelThumbnail(
                 alphaChannel,
-                ui->lbl_AlphaPreview
+                ui->img_AlphaPreview
                 );
 
             updatePreview();
@@ -389,7 +407,6 @@ void MainWindow::setupConnections()
         [this](int index)
         {
             outputSize = ui->cb_OutputSize->currentData().toInt();
-            qDebug()<<outputSize;
         });
 
     connect(
@@ -568,6 +585,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.sourceImage = loadedImage;
     channel.sourcePath = filePath;
     channel.hasTexture = true;
+    channel.alphaComesFromAlphaChannel = false;
 
     updatePreview();
 }
@@ -594,6 +612,70 @@ void MainWindow::showStyledMessage(
         "QPushButton:hover { background-color: rgb(90, 90, 90); }"
     );
     messageBox.exec();
+}
+
+void MainWindow::loadChannelsFromTexture()
+{
+    //Open file explorer to load any image
+    const QString filePath = QFileDialog::getOpenFileName(this,tr("Load RGBA texture"),QString(),tr("Images (*.png *.jpg *.jpeg *.bmp *.tga)"));
+
+    if(filePath.isEmpty())
+    {
+        return;
+    }
+
+    //Get image loaded from file explorer
+    const QImage loadedImage(filePath);
+
+    //Error loading image
+    if (loadedImage.isNull()) {
+        showStyledMessage(
+            QMessageBox::Warning,
+            tr("Invalid image"),
+            tr("The selected file could not be loaded.")
+            );
+        return;
+    }
+
+    //It is not square texture
+    if (!TextureProcessor::isValidSourceImage(loadedImage)) {
+        showStyledMessage(
+            QMessageBox::Warning,
+            tr("Invalid texture size: %1 x %2").arg(loadedImage.width()).arg(loadedImage.height()),
+            tr(
+                "The texture must be square and use a "
+                "power-of-two resolution."
+                )
+            );
+        return;
+    }
+
+    //Fill channel properties
+    redChannel.sourceImage = loadedImage;
+    redChannel.sourcePath = filePath;
+    redChannel.hasTexture = true;
+
+    greenChannel.sourceImage = loadedImage;
+    greenChannel.sourcePath = filePath;
+    greenChannel.hasTexture = true;
+
+    blueChannel.sourceImage = loadedImage;
+    blueChannel.sourcePath = filePath;
+    blueChannel.hasTexture = true;
+
+    alphaChannel.sourceImage = loadedImage;
+    alphaChannel.sourcePath = filePath;
+    alphaChannel.hasTexture = true;
+    alphaChannel.alphaComesFromAlphaChannel = true;
+
+    //Update previews thumbails
+    updateChannelThumbnail(redChannel, ui->img_RedPreview);
+    updateChannelThumbnail(greenChannel, ui->img_GreenPreview);
+    updateChannelThumbnail(blueChannel, ui->img_BluePreview);
+    updateChannelThumbnail(alphaChannel, ui->img_AlphaPreview);
+
+    //Update preview
+    updatePreview();
 }
 
 void MainWindow::removeChannelTexture(ChannelState &channel)

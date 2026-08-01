@@ -26,6 +26,7 @@ struct ChannelState
     bool inverted;
     bool isolated;
     bool previewEnabled = true;
+    bool alphaComesFromAlphaChannel;
 };
 
 #endif // CHANNELSTATE_H

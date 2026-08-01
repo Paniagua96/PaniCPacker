@@ -42,6 +42,7 @@ private:
         const QString &message
     );
 
+    void loadChannelsFromTexture();
     void loadChannelTexture(ChannelState &channel);
     void removeChannelTexture(ChannelState &channel);
     void updateChannelThumbnail(const ChannelState &channel, QLabel *label);

@@ -58,7 +58,7 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
                     value = color.blue();
                     break;
                 case TextureChannel::Alpha:
-                    value = color.red(); // Info most of times will come the same for each channel
+                    value = channel.alphaComesFromAlphaChannel ? color.alpha() : color.red(); //color.alpha() when a start img is loaded, we need the original info in alpha channel | color.red(): We pick any channel rgb, the info should be the same
                     break;
                 }
 
