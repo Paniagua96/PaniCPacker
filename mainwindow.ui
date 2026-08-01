@@ -1254,10 +1254,16 @@ color: rgb(30, 30, 30);</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>68</height>
+              </size>
+             </property>
              <property name="maximumSize">
               <size>
                <width>249</width>
-               <height>57</height>
+               <height>68</height>
               </size>
              </property>
              <property name="text">
@@ -1267,7 +1273,7 @@ color: rgb(30, 30, 30);</string>
               <pixmap resource="resources.qrc">:/resources/banner_app.png</pixmap>
              </property>
              <property name="scaledContents">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>

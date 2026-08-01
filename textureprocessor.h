@@ -9,8 +9,9 @@
 class TextureProcessor
 {
 public:
-    static bool isPowerOfTwo(int value);
+    // static bool isPowerOfTwo(int value);
     static bool isValidSourceImage(const QImage &image);
+    static bool isSquareTexture(const QImage &image);
 
     static QImage prepareChannelImage(
         const ChannelState &channel,

@@ -668,7 +668,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
         return;
     }
 
-    //It is not square texture
+    //Check is some texture was loaded
     if (!TextureProcessor::isValidSourceImage(loadedImage)) {
         showStyledMessage(
             QMessageBox::Warning,
@@ -680,6 +680,17 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
             );
         return;
     }
+
+    //Is not a square texture (only warning)
+    if (!TextureProcessor::isSquareTexture(loadedImage)) {
+        showStyledMessage(
+            QMessageBox::Warning,
+            tr("Non-square texture"),
+            tr("The image is %1 x %2 pixels and is not square.\n")
+                .arg(loadedImage.width())
+                .arg(loadedImage.height()));
+    }
+
 
     //Fill channel properties
     channel.sourceImage = loadedImage;
@@ -741,7 +752,7 @@ void MainWindow::loadChannelsFromTexture()
         return;
     }
 
-    //It is not square texture
+    //Check is some texture was loaded
     if (!TextureProcessor::isValidSourceImage(loadedImage)) {
         showStyledMessage(
             QMessageBox::Warning,
@@ -752,6 +763,16 @@ void MainWindow::loadChannelsFromTexture()
                 )
             );
         return;
+    }
+
+    //Is not a square texture (only warning)
+    if (!TextureProcessor::isSquareTexture(loadedImage)) {
+        showStyledMessage(
+            QMessageBox::Warning,
+            tr("Non-square texture"),
+            tr("The image is %1 x %2 pixels and is not square.\n")
+                .arg(loadedImage.width())
+                .arg(loadedImage.height()));
     }
 
     //Fill channel properties

@@ -1,11 +1,11 @@
 #include "textureprocessor.h"
 
 
-bool TextureProcessor::isPowerOfTwo(int value)
-{
-    //Check if texture has a valid size and if the module is 0 to know if it is power of two
-    return value > 0 && (value &(value - 1)) == 0;
-}
+// bool TextureProcessor::isPowerOfTwo(int value)
+// {
+//     //Check if texture has a valid size and if the module is 0 to know if it is power of two
+//     return value > 0 && (value &(value - 1)) == 0;
+// }
 
 bool TextureProcessor::isValidSourceImage(const QImage &image)
 {
@@ -15,11 +15,20 @@ bool TextureProcessor::isValidSourceImage(const QImage &image)
         return false;
     }
 
+    return true;
+
+
+    //FEATURE: Uncomment to allow only textures squared
     //Check if texture is square
-    bool isSquareTexture = image.width() == image.height();
+    //bool isSquareTexture = image.width() == image.height();
 
     //Check if width & height are power of two
-    return (isPowerOfTwo(image.width()) && isPowerOfTwo(image.height())) || isSquareTexture;
+    //return (isPowerOfTwo(image.width()) && isPowerOfTwo(image.height())) || isSquareTexture;
+}
+
+bool TextureProcessor::isSquareTexture(const QImage &image)
+{
+    return image.width() == image.height();
 }
 
 QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const QSize &outputSize)
