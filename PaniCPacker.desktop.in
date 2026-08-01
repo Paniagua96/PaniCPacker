@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=PaniCPacker
+Comment=Pack texture channels into a single image
+Exec=PaniCPacker
+Icon=panicpacker
+Categories=Graphics;Utility;
+Terminal=false

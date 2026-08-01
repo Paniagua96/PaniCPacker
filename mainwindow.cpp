@@ -34,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
     initializeChannels();
     setupConnections();
     ui->btn_overwrite->setEnabled(false);
+    ui->btn_overwrite->setStyleSheet(
+        "QPushButton { background-color: rgb(255, 253, 255); color: rgb(30, 30, 30); }"
+        "QPushButton:disabled { background-color: rgb(83, 83, 83); color: rgb(150, 150, 150); }"
+    );
     ui->statusBar->setStyleSheet(
         "QStatusBar { color: rgb(235, 235, 235); background-color: rgb(30, 30, 30); }"
     );
