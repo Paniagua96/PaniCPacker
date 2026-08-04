@@ -52,19 +52,19 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
 
                 int value = 0;
 
-                //Extract pixel value for each channel
-                switch (channel.channel) {
-                case TextureChannel::Red://Always extract info from channel red (it should be a data texture only with one channel or un grayscale)
-                     value = channel.comesFromPackedTexture ? color.red() : color.red();
+                //Extract the component selected for this source image.
+                switch (channel.sourceComponent) {
+                case TextureChannel::Red:
+                    value = color.red();
                     break;
                 case TextureChannel::Green:
-                     value = channel.comesFromPackedTexture ? color.green() : color.red();
+                    value = color.green();
                     break;
                 case TextureChannel::Blue:
-                    value = channel.comesFromPackedTexture ? color.blue() : color.red();
+                    value = color.blue();
                     break;
                 case TextureChannel::Alpha:
-                    value = channel.comesFromPackedTexture ? color.alpha() : color.red();
+                    value = color.alpha();
                     break;
                 }
 
@@ -138,4 +138,3 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
 
     return output;
 }
-

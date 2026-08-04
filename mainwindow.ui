@@ -419,6 +419,9 @@ color: rgb(30, 30, 30);</string>
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QComboBox" name="cb_swap_red"/>
+              </item>
              </layout>
             </widget>
            </item>
@@ -604,6 +607,9 @@ color: rgb(30, 30, 30);</string>
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QComboBox" name="cb_swap_green"/>
+              </item>
              </layout>
             </widget>
            </item>
@@ -785,6 +791,9 @@ color: rgb(30, 30, 30);</string>
                  <string>Invert?</string>
                 </property>
                </widget>
+              </item>
+              <item>
+               <widget class="QComboBox" name="cb_swap_blue"/>
               </item>
              </layout>
             </widget>
@@ -1055,6 +1064,9 @@ color: rgb(30, 30, 30);</string>
                     <string>Invert?</string>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <widget class="QComboBox" name="cb_swap_alpha"/>
                  </item>
                 </layout>
                </widget>

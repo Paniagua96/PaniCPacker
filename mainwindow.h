@@ -37,6 +37,9 @@ private:
     QImage infoSourceImage;
     QString infoSourcePath;
 
+    void helperCopyTextureData(ChannelState &source, ChannelState &target);
+    void helperUpdateAllThumbnails();
+    
     void initializeChannels();
     void setupConnections();
     void setupOutputSizes();
@@ -50,6 +53,7 @@ private:
         const QString &message
     );
 
+    void swapChannel(ChannelState &sourceChannel, int indexToSwap);
     void loadChannelsFromTexture();
     void loadChannelTexture(ChannelState &channel);
     void removeChannelTexture(ChannelState &channel);

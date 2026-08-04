@@ -50,6 +50,24 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::helperCopyTextureData(ChannelState &source, ChannelState &target)
+{
+    target.sourceImage = source.sourceImage;
+    target.sourcePath = source.sourcePath;
+    target.hasTexture = source.hasTexture;
+    target.comesFromPackedTexture = source.comesFromPackedTexture;
+    target.sourceComponent = source.sourceComponent;
+    target.inverted = source.inverted;
+}
+
+void MainWindow::helperUpdateAllThumbnails()
+{
+    updateChannelThumbnail(redChannel, ui->img_RedPreview);
+    updateChannelThumbnail(greenChannel,ui->img_GreenPreview);
+    updateChannelThumbnail(blueChannel, ui->img_BluePreview);
+    updateChannelThumbnail(alphaChannel, ui->img_AlphaPreview);
+}
+
 void MainWindow::initializeChannels()
 {
     ui->f_AlphaChannel->setVisible(false);
@@ -58,6 +76,11 @@ void MainWindow::initializeChannels()
     greenChannel.channel = TextureChannel::Green;
     blueChannel.channel = TextureChannel::Blue;
     alphaChannel.channel = TextureChannel::Alpha;
+
+    redChannel.sourceComponent = TextureChannel::Red;
+    greenChannel.sourceComponent = TextureChannel::Green;
+    blueChannel.sourceComponent = TextureChannel::Blue;
+    alphaChannel.sourceComponent = TextureChannel::Alpha;
 
     redChannel.previewEnabled = true;
     greenChannel.previewEnabled = true;
@@ -78,6 +101,33 @@ void MainWindow::initializeChannels()
     greenChannel.comesFromPackedTexture = false;
     blueChannel.comesFromPackedTexture = false;
     alphaChannel.comesFromPackedTexture = false;
+
+    ui->cb_swap_red->setPlaceholderText("Swap channel");
+    ui->cb_swap_red->addItem("None",0);
+    ui->cb_swap_red->addItem("Swap To Green",2);
+    ui->cb_swap_red->addItem("Swap To Blue",3);
+    ui->cb_swap_red->addItem("Swap To Alpha",4);
+    
+    
+    ui->cb_swap_green->setPlaceholderText("Swap channel");
+    ui->cb_swap_green->addItem("None",0);
+    ui->cb_swap_green->addItem("Swap To Red",1);
+    ui->cb_swap_green->addItem("Swap To Blue",3);
+    ui->cb_swap_green->addItem("Swap To Alpha",4);
+
+    ui->cb_swap_blue->setPlaceholderText("Swap channel");
+    ui->cb_swap_blue->addItem("None",0);
+    ui->cb_swap_blue->addItem("Swap To Red",1);
+    ui->cb_swap_blue->addItem("Swap To Green",2);
+    ui->cb_swap_blue->addItem("Swap To Alpha",4);
+
+    ui->cb_swap_alpha->setPlaceholderText("Swap channel");
+    ui->cb_swap_alpha->addItem("None",0);
+    ui->cb_swap_alpha->addItem("Swap To Red",1);
+    ui->cb_swap_alpha->addItem("Swap To Green",2);
+    ui->cb_swap_alpha->addItem("Swap To Blue",3);
+
+
 
     ui->tggle_RedInvert->setChecked(false);
     ui->tggle_RedIsolated->setChecked(false);
@@ -192,6 +242,20 @@ void MainWindow::setupConnections()
                 );
         }
         );
+
+    //Combo box swap
+    connect(
+        ui->cb_swap_red,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            swapChannel(redChannel,ui->cb_swap_red->currentData().toInt());
+            helperUpdateAllThumbnails();
+            markExportOutdated();
+            updateTextureInfo();
+            updatePreview();
+        });
 #pragma endregion ChannelRED
 
 #pragma region ChannelGREEN
@@ -263,6 +327,20 @@ void MainWindow::setupConnections()
                 );
         }
         );
+
+    //Combo box swap
+    connect(
+        ui->cb_swap_green,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            swapChannel(greenChannel,ui->cb_swap_green->currentData().toInt());
+            helperUpdateAllThumbnails();
+            markExportOutdated();
+            updateTextureInfo();
+            updatePreview();
+        });
 #pragma endregion ChannelGREEN
 
 #pragma region ChannelBLUE
@@ -334,6 +412,20 @@ void MainWindow::setupConnections()
                 );
         }
         );
+
+    //Combo box swap
+    connect(
+        ui->cb_swap_blue,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            swapChannel(blueChannel,ui->cb_swap_blue->currentData().toInt());
+            helperUpdateAllThumbnails();
+            markExportOutdated();
+            updateTextureInfo();
+            updatePreview();
+        });
 #pragma endregion ChannelBLUE
 
     //Toogle use Alpha
@@ -417,6 +509,20 @@ void MainWindow::setupConnections()
                 );
         }
         );
+
+    //Combo box swap
+    connect(
+        ui->cb_swap_alpha,
+        &QComboBox::activated,
+        this,
+        [this](int index)
+        {
+            swapChannel(alphaChannel,ui->cb_swap_alpha->currentData().toInt());
+            helperUpdateAllThumbnails();
+            markExportOutdated();
+            updateTextureInfo();
+            updatePreview();
+        });
 #pragma endregion ChannelALPHA
 
     //Combo box: Size width
@@ -729,6 +835,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.sourcePath = filePath;
     channel.hasTexture = true;
     channel.comesFromPackedTexture = false;
+    channel.sourceComponent = TextureChannel::Red;
     markExportOutdated();
 
     infoSourceImage = loadedImage;
@@ -761,6 +868,53 @@ void MainWindow::showStyledMessage(
         "QPushButton:hover { background-color: rgb(90, 90, 90); }"
     );
     messageBox.exec();
+}
+
+
+void MainWindow::swapChannel(ChannelState &sourceChannel, int indexToSwap)
+{
+    if(indexToSwap==0)
+        return;
+
+    //Get channels data to swap them
+    ChannelState _targetChannel;
+
+    //Data from source -> target channel
+    switch (indexToSwap) {
+    case 1:
+        _targetChannel = redChannel;
+        helperCopyTextureData(sourceChannel, redChannel);
+        break;
+    case 2:
+        _targetChannel = greenChannel;
+        helperCopyTextureData(sourceChannel, greenChannel);
+        break;
+    case 3:
+        _targetChannel = blueChannel;
+        helperCopyTextureData(sourceChannel, blueChannel);
+        break;
+    case 4:
+        _targetChannel = alphaChannel;
+        helperCopyTextureData(sourceChannel, alphaChannel);
+        break;
+    }
+
+    //Data from target -> source channel
+    switch(sourceChannel.channel)
+    {
+    case TextureChannel::Red:
+        helperCopyTextureData(_targetChannel, redChannel);
+        break;
+    case TextureChannel::Green:
+        helperCopyTextureData(_targetChannel, greenChannel);
+        break;
+    case TextureChannel::Blue:
+        helperCopyTextureData(_targetChannel, blueChannel);
+        break;
+    case TextureChannel::Alpha:
+        helperCopyTextureData(_targetChannel, alphaChannel);
+        break;
+    }
 }
 
 void MainWindow::loadChannelsFromTexture()
@@ -814,21 +968,25 @@ void MainWindow::loadChannelsFromTexture()
     redChannel.sourcePath = filePath;
     redChannel.hasTexture = true;
     redChannel.comesFromPackedTexture = true;
+    redChannel.sourceComponent = TextureChannel::Red;
 
     greenChannel.sourceImage = loadedImage;
     greenChannel.sourcePath = filePath;
     greenChannel.hasTexture = true;
     greenChannel.comesFromPackedTexture = true;
+    greenChannel.sourceComponent = TextureChannel::Green;
 
     blueChannel.sourceImage = loadedImage;
     blueChannel.sourcePath = filePath;
     blueChannel.hasTexture = true;
     blueChannel.comesFromPackedTexture = true;
+    blueChannel.sourceComponent = TextureChannel::Blue;
 
     alphaChannel.sourceImage = loadedImage;
     alphaChannel.sourcePath = filePath;
     alphaChannel.hasTexture = true;
     alphaChannel.comesFromPackedTexture = true;
+    alphaChannel.sourceComponent = TextureChannel::Alpha;
     markExportOutdated();
 
     infoSourceImage = loadedImage;
@@ -1016,4 +1174,3 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     QMainWindow::resizeEvent(event);
     updatePreview();
 }
-

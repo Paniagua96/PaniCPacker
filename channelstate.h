@@ -17,7 +17,11 @@ enum class TextureChannel
 
 struct ChannelState
 {
+    //Output slot where this data will be packed.
     TextureChannel channel;
+
+    //Component to read from the loaded source image.
+    TextureChannel sourceComponent = TextureChannel::Red;
 
     QImage sourceImage;
     QString sourcePath;
