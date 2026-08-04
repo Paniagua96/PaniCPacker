@@ -22,7 +22,8 @@ public:
         const ChannelState &green,
         const ChannelState &blue,
         const ChannelState &alpha,
-        const QSize &outputSize);
+        const QSize &outputSize,
+        const bool useAlpha);
 
     static QImage buildIsolatedPreview(
         const ChannelState &channel,

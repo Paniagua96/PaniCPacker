@@ -54,17 +54,17 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
 
                 //Extract pixel value for each channel
                 switch (channel.channel) {
-                case TextureChannel::Red:
-                    value = color.red();
+                case TextureChannel::Red://Always extract info from channel red (it should be a data texture only with one channel or un grayscale)
+                     value = channel.comesFromPackedTexture ? color.red() : color.red();
                     break;
                 case TextureChannel::Green:
-                    value = color.green();
+                     value = channel.comesFromPackedTexture ? color.green() : color.red();
                     break;
                 case TextureChannel::Blue:
-                    value = color.blue();
+                    value = channel.comesFromPackedTexture ? color.blue() : color.red();
                     break;
                 case TextureChannel::Alpha:
-                    value = channel.alphaComesFromAlphaChannel ? color.alpha() : color.red(); //color.alpha() when a start img is loaded, we need the original info in alpha channel | color.red(): We pick any channel rgb, the info should be the same
+                    value = channel.comesFromPackedTexture ? color.alpha() : color.red();
                     break;
                 }
 
@@ -102,7 +102,7 @@ QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const
     return gray.convertToFormat(QImage::Format_RGB888);
 }
 
-QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const ChannelState &green, const ChannelState &blue, const ChannelState &alpha, const QSize &outputSize)
+QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const ChannelState &green, const ChannelState &blue, const ChannelState &alpha, const QSize &outputSize,const bool useAlpha)
 {
     //Get images with their pixel values
     const QImage redImage = prepareChannelImage(red,outputSize);
@@ -111,7 +111,11 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
     const QImage alphaImage = prepareChannelImage(alpha,outputSize);
 
     //Var to save the final result
-    QImage output(outputSize,QImage::Format_RGBA8888);
+    const QImage::Format format = useAlpha
+                                      ? QImage::Format_RGBA8888
+                                      : QImage::Format_RGB888;
+    QImage output(outputSize,format);
+    const int channels = useAlpha ? 4 : 3;
 
     //Write each pixel for each channel with their values
     for (int y = 0; y < output.height(); ++y) {
@@ -123,7 +127,7 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
         uchar *outputLine = output.scanLine(y);
 
         for (int x = 0; x < output.width(); ++x) {
-            const int outputIndex = x * 4;
+            const int outputIndex = x * channels;
 
             outputLine[outputIndex + 0] = redLine[x];
             outputLine[outputIndex + 1] = greenLine[x];

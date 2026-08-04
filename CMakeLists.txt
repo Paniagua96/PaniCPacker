@@ -54,6 +54,9 @@ qt_add_executable(PaniCPacker
     textureprocessor.cpp
     exportservice.h
     exportservice.cpp
+    popup_about.ui
+    popup_about.h
+    popup_about.cpp
     ${PLATFORM_ICON_SRC}
 )
 

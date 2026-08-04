@@ -38,9 +38,9 @@ private:
 
     void initializeChannels();
     void setupConnections();
-    void setupPresets();
     void setupOutputSizes();
     void updateTextureInfo();
+    QString formatByteSize(qint64 bytes) const;
     QImage buildCurrentPackedTexture() const;
     void showStyledMessage(
         QMessageBox::Icon icon,
@@ -61,7 +61,5 @@ private:
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
-
-private slots:
 };
 #endif // MAINWINDOW_H

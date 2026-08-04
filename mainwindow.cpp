@@ -5,6 +5,7 @@
 #include "channelstate.h"
 #include "textureprocessor.h"
 #include "exportservice.h"
+#include "popup_about.h"
 
 #include <qdebug.h>
 
@@ -24,12 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("PaniCPacker");
 
     //Set initial size
-    resize(960,570);
+    resize(960,720);
 
     //Build using main window.ui (ui from designer)
     ui->setupUi(this);
 
-    setupPresets();
     setupOutputSizes();
     initializeChannels();
     setupConnections();
@@ -52,6 +52,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::initializeChannels()
 {
+    ui->f_AlphaChannel->setVisible(false);
+
     redChannel.channel = TextureChannel::Red;
     greenChannel.channel = TextureChannel::Green;
     blueChannel.channel = TextureChannel::Blue;
@@ -72,10 +74,10 @@ void MainWindow::initializeChannels()
     blueChannel.isolated = false;
     alphaChannel.isolated = false;
 
-    redChannel.alphaComesFromAlphaChannel = false;
-    greenChannel.alphaComesFromAlphaChannel = false;
-    blueChannel.alphaComesFromAlphaChannel = false;
-    alphaChannel.alphaComesFromAlphaChannel = false;
+    redChannel.comesFromPackedTexture = false;
+    greenChannel.comesFromPackedTexture = false;
+    blueChannel.comesFromPackedTexture = false;
+    alphaChannel.comesFromPackedTexture = false;
 
     ui->tggle_RedInvert->setChecked(false);
     ui->tggle_RedIsolated->setChecked(false);
@@ -120,16 +122,6 @@ void MainWindow::setupConnections()
         }
         );
 
-
-    // Combo box Preset
-    connect(
-        ui->cb_Presets, //Object to connect
-        &QComboBox::currentIndexChanged, //Wich signal to connect
-        this,
-        [this](int index) //Lamda function to connect
-        {
-            ui->lbl_PresetDescription->setText(ui->cb_Presets->itemData(index).toString());
-        });
 
 #pragma region ChannelRED
     //Button load image channel Red
@@ -339,7 +331,19 @@ void MainWindow::setupConnections()
                 );
         }
         );
-#pragma endregion ChannelBLUE    
+#pragma endregion ChannelBLUE
+
+    //Toogle use Alpha
+    connect(
+        ui->tggle_useAlpha,
+        &QCheckBox::checkStateChanged,
+        this,
+        [this](bool checked)
+        {
+            ui->f_AlphaChannel->setVisible(checked);
+            updateTextureInfo();
+            updatePreview();
+        });
 
 #pragma region ChannelALPHA                    
     //Button load image channel Alpha
@@ -410,6 +414,7 @@ void MainWindow::setupConnections()
         );
 #pragma endregion ChannelALPHA
 
+    //Combo box: Size width
     connect(
         ui->cb_OutputSize_width,
         &QComboBox::activated,
@@ -418,8 +423,10 @@ void MainWindow::setupConnections()
         {
             outputSize_width = ui->cb_OutputSize_width->currentData().toInt();
             updateTextureInfo();
+            updatePreview();
         });
 
+    //Combo box: Size height
     connect(
         ui->cb_OutputSize_height,
         &QComboBox::activated,
@@ -428,8 +435,11 @@ void MainWindow::setupConnections()
         {
             outputSize_height = ui->cb_OutputSize_height->currentData().toInt();
             updateTextureInfo();
+            updatePreview();
         });
 
+
+    //Button export
     connect(
         ui -> btn_Export,
         &QPushButton::clicked,
@@ -451,6 +461,7 @@ void MainWindow::setupConnections()
             if (success) {
                 ui->btn_overwrite->setEnabled(true);
                 ui->btn_overwrite->setToolTip(lastExportPath);
+                updateTextureInfo();
                 ui->statusBar->showMessage(
                     tr("Exported: %1").arg(QFileInfo(lastExportPath).fileName()),
                     3000
@@ -473,6 +484,7 @@ void MainWindow::setupConnections()
             }
         });
 
+    //Button overwrite
     connect(
         ui->btn_overwrite,
         &QPushButton::clicked,
@@ -486,6 +498,7 @@ void MainWindow::setupConnections()
                 ExportService::overwriteImage(lastExportPath, packedImage, &errorMessage);
 
             if (success) {
+                updateTextureInfo();
                 ui->statusBar->showMessage(
                     tr("Overwritten: %1").arg(QFileInfo(lastExportPath).fileName()),
                     3000
@@ -499,6 +512,18 @@ void MainWindow::setupConnections()
             }
         }
     );
+
+    //Button about
+    connect(
+        ui->btn_About,
+        &QPushButton::clicked,
+        this,
+        [this]()
+        {
+            PopupAbout aboutDialog(this);
+            aboutDialog.exec();
+        }
+        );
 
 #pragma region PreviewToggles
     connect(
@@ -543,37 +568,10 @@ void MainWindow::setupConnections()
 #pragma endregion PreviewToggles
 }
 
-void MainWindow::setupPresets()
-{
-    ui->cb_Presets->clear();
-
-    ui->cb_Presets->addItem(
-        "ORM",
-        "R: Occlusion | G: Roughness | B: Metallic | A: Unused"
-        );
-
-    ui->cb_Presets->addItem(
-        "RMA",
-        "R: Roughness | G: Metallic | B: Ambient Occlusion | A: Unused"
-        );
-
-    ui->cb_Presets->addItem(
-        "Custom",
-        "R: Custom | G: Custom | B: Custom | A: Custom"
-        );
-
-    ui->cb_Presets->setCurrentIndex(0);
-
-    ui->lbl_PresetDescription->setText(
-        ui->cb_Presets->currentData().toString()
-        );
-}
-
 void MainWindow::setupOutputSizes()
 {
     //Combo box width
     ui->cb_OutputSize_width->clear();
-    
     ui->cb_OutputSize_width->addItem("128", 128);
     ui->cb_OutputSize_width->addItem("256", 256);
     ui->cb_OutputSize_width->addItem("512", 512);
@@ -607,41 +605,65 @@ QImage MainWindow::buildCurrentPackedTexture() const
         greenChannel,
         blueChannel,
         alphaChannel,
-        QSize(outputSize_width, outputSize_height)
+        QSize(outputSize_width, outputSize_height),
+        ui->tggle_useAlpha->isChecked()
     );
 }
 
+QString MainWindow::formatByteSize(qint64 bytes) const
+{
+    const double kilobytes = static_cast<double>(bytes) / 1024.0;
+    const double megabytes = kilobytes / 1024.0;
+
+    if (megabytes >= 1.0) {
+        return tr("%1 MB").arg(megabytes, 0, 'f', 2);
+    }
+
+    return tr("%1 KB").arg(kilobytes, 0, 'f', 1);
+}
+
+//Text to show info about the image loaded and the current output settings
 void MainWindow::updateTextureInfo()
 {
+    const bool useAlpha = ui->tggle_useAlpha->isChecked();
+    const int bytesPerPixel = useAlpha ? 4 : 3;
+    const QString outputFormat = useAlpha ? tr("RGBA8") : tr("RGB8");
     const qint64 outputBytes =
-        static_cast<qint64>(outputSize_width) * outputSize_height * 4;
+        static_cast<qint64>(outputSize_width) * outputSize_height * bytesPerPixel;
     const double outputMegabytes =
         static_cast<double>(outputBytes) / (1024.0 * 1024.0);
+    const QString lastExportInfo = lastExportPath.isEmpty()
+        ? tr("Not exported yet")
+        : formatByteSize(QFileInfo(lastExportPath).size());
 
     if (infoSourceImage.isNull()) {
         ui->lbl_texInfo->setText(
             tr("No source texture loaded\n"
-               "Output: %1 x %2 | Uncompressed: %3 MB (RGBA8)")
+               "Output: %1 x %2 | Format: %3 | Uncompressed: %4 MB\n"
+               "Last export: %5")
                 .arg(outputSize_width)
                 .arg(outputSize_height)
+                .arg(outputFormat)
                 .arg(outputMegabytes, 0, 'f', 2)
+                .arg(lastExportInfo)
         );
         return;
     }
 
     const QFileInfo sourceFileInfo(infoSourcePath);
-    const double diskMegabytes =
-        static_cast<double>(sourceFileInfo.size()) / (1024.0 * 1024.0);
 
     ui->lbl_texInfo->setText(
-        tr("Source: %1 x %2 | Disk: %3 MB\n"
-           "Output: %4 x %5 | Uncompressed: %6 MB (RGBA8)")
+        tr("Source: %1 x %2 | Source disk: %3\n"
+           "Output: %4 x %5 | Format: %6 | Uncompressed: %7 MB\n"
+           "Last export: %8")
             .arg(infoSourceImage.width())
             .arg(infoSourceImage.height())
-            .arg(diskMegabytes, 0, 'f', 2)
+            .arg(formatByteSize(sourceFileInfo.size()))
             .arg(outputSize_width)
             .arg(outputSize_height)
+            .arg(outputFormat)
             .arg(outputMegabytes, 0, 'f', 2)
+            .arg(lastExportInfo)
     );
 }
 
@@ -668,19 +690,6 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
         return;
     }
 
-    //Check is some texture was loaded
-    if (!TextureProcessor::isValidSourceImage(loadedImage)) {
-        showStyledMessage(
-            QMessageBox::Warning,
-            tr("Invalid texture size: %1 x %2").arg(loadedImage.width()).arg(loadedImage.height()),
-            tr(
-                "The texture must be square and use a "
-                "power-of-two resolution."
-                )
-            );
-        return;
-    }
-
     //Is not a square texture (only warning)
     if (!TextureProcessor::isSquareTexture(loadedImage)) {
         showStyledMessage(
@@ -696,7 +705,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.sourceImage = loadedImage;
     channel.sourcePath = filePath;
     channel.hasTexture = true;
-    channel.alphaComesFromAlphaChannel = false;
+    channel.comesFromPackedTexture = false;
 
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
@@ -705,6 +714,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     updatePreview();
 }
 
+//Helper when you need to show a warning window (keep the same styles)
 void MainWindow::showStyledMessage(
     QMessageBox::Icon icon,
     const QString &title,
@@ -779,19 +789,22 @@ void MainWindow::loadChannelsFromTexture()
     redChannel.sourceImage = loadedImage;
     redChannel.sourcePath = filePath;
     redChannel.hasTexture = true;
+    redChannel.comesFromPackedTexture = true;
 
     greenChannel.sourceImage = loadedImage;
     greenChannel.sourcePath = filePath;
     greenChannel.hasTexture = true;
+    greenChannel.comesFromPackedTexture = true;
 
     blueChannel.sourceImage = loadedImage;
     blueChannel.sourcePath = filePath;
     blueChannel.hasTexture = true;
+    blueChannel.comesFromPackedTexture = true;
 
     alphaChannel.sourceImage = loadedImage;
     alphaChannel.sourcePath = filePath;
     alphaChannel.hasTexture = true;
-    alphaChannel.alphaComesFromAlphaChannel = true;
+    alphaChannel.comesFromPackedTexture = true;
 
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
@@ -840,6 +853,17 @@ void MainWindow::setIsolatedChannel(TextureChannel channel, bool enabled)
     blueChannel.isolated = enabled && channel == TextureChannel::Blue;
     alphaChannel.isolated = enabled && channel == TextureChannel::Alpha;
 
+    const bool hasIsolatedChannel =
+        redChannel.isolated ||
+        greenChannel.isolated ||
+        blueChannel.isolated ||
+        alphaChannel.isolated;
+
+    ui->tggl_preview_r->setEnabled(!hasIsolatedChannel);
+    ui->tggl_preview_g->setEnabled(!hasIsolatedChannel);
+    ui->tggl_preview_b->setEnabled(!hasIsolatedChannel);
+    ui->tggl_preview_a->setEnabled(!hasIsolatedChannel);
+
     ui->tggle_RedIsolated->blockSignals(true);
     ui->tggle_GreenIsolated->blockSignals(true);
     ui->tggle_BlueIsolated->blockSignals(true);
@@ -861,6 +885,21 @@ void MainWindow::setIsolatedChannel(TextureChannel channel, bool enabled)
 
 void MainWindow::updatePreview()
 {
+    //Check if there are any texture
+    const bool hasAnyTexture =
+        redChannel.hasTexture ||
+        greenChannel.hasTexture ||
+        blueChannel.hasTexture ||
+        alphaChannel.hasTexture;
+
+    //Avoid generate a empty image if there are not any channel with data
+    if (!hasAnyTexture) {
+        ui->img_MainPreview->clear();
+        ui->img_MainPreview->setText(tr("Load textures to preview"));
+        ui->img_MainPreview->setAlignment(Qt::AlignCenter);
+        return;
+    }
+
     const QSize previewResolution(outputSize_width, outputSize_height);
 
     QImage previewImage;
@@ -907,12 +946,12 @@ void MainWindow::updatePreview()
                 previewGreen,
                 previewBlue,
                 previewAlpha,
-                previewResolution
-                );
+                previewResolution,
+                ui->tggle_useAlpha->isChecked());
     }
 
     const QSize availableSize =
-        ui->lbl_MainPreview->size();
+        ui->img_MainPreview->size();
 
     const QPixmap pixmap =
         QPixmap::fromImage(previewImage).scaled(
@@ -921,8 +960,8 @@ void MainWindow::updatePreview()
             Qt::SmoothTransformation
             );
 
-    ui->lbl_MainPreview->setPixmap(pixmap);
-    ui->lbl_MainPreview->setAlignment(Qt::AlignCenter);
+    ui->img_MainPreview->setPixmap(pixmap);
+    ui->img_MainPreview->setAlignment(Qt::AlignCenter);
 }
 
 const ChannelState *MainWindow::isolatedChannel() const

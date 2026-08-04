@@ -26,7 +26,7 @@ struct ChannelState
     bool inverted;
     bool isolated;
     bool previewEnabled = true;
-    bool alphaComesFromAlphaChannel;
+    bool comesFromPackedTexture;
 };
 
 #endif // CHANNELSTATE_H
