@@ -33,6 +33,7 @@ private:
     int outputSize_width;
     int outputSize_height;
     QString lastExportPath;
+    bool exportIsUpToDate = false;
     QImage infoSourceImage;
     QString infoSourcePath;
 
@@ -40,6 +41,7 @@ private:
     void setupConnections();
     void setupOutputSizes();
     void updateTextureInfo();
+    void markExportOutdated();
     QString formatByteSize(qint64 bytes) const;
     QImage buildCurrentPackedTexture() const;
     void showStyledMessage(

@@ -168,6 +168,7 @@ void MainWindow::setupConnections()
         [this](bool checked)
         {
             redChannel.inverted = checked;
+            markExportOutdated();
 
             updateChannelThumbnail(
                 redChannel,
@@ -238,6 +239,7 @@ void MainWindow::setupConnections()
         [this](bool checked)
         {
             greenChannel.inverted = checked;
+            markExportOutdated();
 
             updateChannelThumbnail(
                 greenChannel,
@@ -308,6 +310,7 @@ void MainWindow::setupConnections()
         [this](bool checked)
         {
             blueChannel.inverted = checked;
+            markExportOutdated();
 
             updateChannelThumbnail(
                 blueChannel,
@@ -336,11 +339,12 @@ void MainWindow::setupConnections()
     //Toogle use Alpha
     connect(
         ui->tggle_useAlpha,
-        &QCheckBox::checkStateChanged,
+        &QCheckBox::toggled,
         this,
         [this](bool checked)
         {
             ui->f_AlphaChannel->setVisible(checked);
+            markExportOutdated();
             updateTextureInfo();
             updatePreview();
         });
@@ -389,6 +393,7 @@ void MainWindow::setupConnections()
         [this](bool checked)
         {
             alphaChannel.inverted = checked;
+            markExportOutdated();
 
             updateChannelThumbnail(
                 alphaChannel,
@@ -422,6 +427,7 @@ void MainWindow::setupConnections()
         [this](int index)
         {
             outputSize_width = ui->cb_OutputSize_width->currentData().toInt();
+            markExportOutdated();
             updateTextureInfo();
             updatePreview();
         });
@@ -434,10 +440,10 @@ void MainWindow::setupConnections()
         [this](int index)
         {
             outputSize_height = ui->cb_OutputSize_height->currentData().toInt();
+            markExportOutdated();
             updateTextureInfo();
             updatePreview();
         });
-
 
     //Button export
     connect(
@@ -459,6 +465,7 @@ void MainWindow::setupConnections()
                     );
 
             if (success) {
+                exportIsUpToDate = true;
                 ui->btn_overwrite->setEnabled(true);
                 ui->btn_overwrite->setToolTip(lastExportPath);
                 updateTextureInfo();
@@ -498,6 +505,7 @@ void MainWindow::setupConnections()
                 ExportService::overwriteImage(lastExportPath, packedImage, &errorMessage);
 
             if (success) {
+                exportIsUpToDate = true;
                 updateTextureInfo();
                 ui->statusBar->showMessage(
                     tr("Overwritten: %1").arg(QFileInfo(lastExportPath).fileName()),
@@ -622,6 +630,13 @@ QString MainWindow::formatByteSize(qint64 bytes) const
     return tr("%1 KB").arg(kilobytes, 0, 'f', 1);
 }
 
+void MainWindow::markExportOutdated()
+{
+    if (!lastExportPath.isEmpty()) {
+        exportIsUpToDate = false;
+    }
+}
+
 //Text to show info about the image loaded and the current output settings
 void MainWindow::updateTextureInfo()
 {
@@ -632,9 +647,17 @@ void MainWindow::updateTextureInfo()
         static_cast<qint64>(outputSize_width) * outputSize_height * bytesPerPixel;
     const double outputMegabytes =
         static_cast<double>(outputBytes) / (1024.0 * 1024.0);
-    const QString lastExportInfo = lastExportPath.isEmpty()
-        ? tr("Not exported yet")
-        : formatByteSize(QFileInfo(lastExportPath).size());
+    QString lastExportInfo = tr("Not exported yet");
+
+    if (!lastExportPath.isEmpty()) {
+        const QString exportState = exportIsUpToDate
+            ? tr("Current")
+            : tr("Outdated");
+
+        lastExportInfo = tr("%1 (%2)")
+            .arg(formatByteSize(QFileInfo(lastExportPath).size()))
+            .arg(exportState);
+    }
 
     if (infoSourceImage.isNull()) {
         ui->lbl_texInfo->setText(
@@ -706,6 +729,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     channel.sourcePath = filePath;
     channel.hasTexture = true;
     channel.comesFromPackedTexture = false;
+    markExportOutdated();
 
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
@@ -805,6 +829,7 @@ void MainWindow::loadChannelsFromTexture()
     alphaChannel.sourcePath = filePath;
     alphaChannel.hasTexture = true;
     alphaChannel.comesFromPackedTexture = true;
+    markExportOutdated();
 
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
@@ -825,6 +850,7 @@ void MainWindow::removeChannelTexture(ChannelState &channel)
     channel.sourceImage = QImage();
     channel.sourcePath.clear();
     channel.hasTexture = false;
+    markExportOutdated();
 
     updatePreview();
 }
