@@ -38,7 +38,7 @@ private:
     QString lastExportPath;
     const ChannelState *isolatedChannel() const;
 
-    void helperCopyTextureData(ChannelState &source, ChannelState &target);
+    void helperCopyChannelData(ChannelState &source, ChannelState &target);
     void helperUpdateAllThumbnails();
     void helperShowStyledMessage(QMessageBox::Icon icon, const QString &title, const QString &message);
     

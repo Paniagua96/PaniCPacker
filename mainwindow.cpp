@@ -59,7 +59,7 @@ MainWindow::~MainWindow()
 
 
 #pragma region Helpers
-void MainWindow::helperCopyTextureData(ChannelState &source, ChannelState &target)
+void MainWindow::helperCopyChannelData(ChannelState &source, ChannelState &target)
 {
     target.sourceImage = source.sourceImage;
     target.sourcePath = source.sourcePath;
@@ -1023,19 +1023,19 @@ void MainWindow::swapChannel(ChannelState &sourceChannel, int indexToSwap)
     switch (indexToSwap) {
     case 1:
         _targetChannel = redChannel;
-        helperCopyTextureData(sourceChannel, redChannel);
+        helperCopyChannelData(sourceChannel, redChannel);
         break;
     case 2:
         _targetChannel = greenChannel;
-        helperCopyTextureData(sourceChannel, greenChannel);
+        helperCopyChannelData(sourceChannel, greenChannel);
         break;
     case 3:
         _targetChannel = blueChannel;
-        helperCopyTextureData(sourceChannel, blueChannel);
+        helperCopyChannelData(sourceChannel, blueChannel);
         break;
     case 4:
         _targetChannel = alphaChannel;
-        helperCopyTextureData(sourceChannel, alphaChannel);
+        helperCopyChannelData(sourceChannel, alphaChannel);
         break;
     }
 
@@ -1043,16 +1043,16 @@ void MainWindow::swapChannel(ChannelState &sourceChannel, int indexToSwap)
     switch(sourceChannel.channel)
     {
     case TextureChannel::Red:
-        helperCopyTextureData(_targetChannel, redChannel);
+        helperCopyChannelData(_targetChannel, redChannel);
         break;
     case TextureChannel::Green:
-        helperCopyTextureData(_targetChannel, greenChannel);
+        helperCopyChannelData(_targetChannel, greenChannel);
         break;
     case TextureChannel::Blue:
-        helperCopyTextureData(_targetChannel, blueChannel);
+        helperCopyChannelData(_targetChannel, blueChannel);
         break;
     case TextureChannel::Alpha:
-        helperCopyTextureData(_targetChannel, alphaChannel);
+        helperCopyChannelData(_targetChannel, alphaChannel);
         break;
     }
 }
