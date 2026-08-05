@@ -7,10 +7,7 @@ PopupAbout::PopupAbout(QWidget *parent) : QDialog(parent), ui(new Ui::Popup_Abou
     //Window title
     setWindowTitle("About");
 
-    //Set initial size
-    //resize(960,720);
-
-
+    //Build using main window.ui (ui from designer)
     ui->setupUi(this);
 }
 

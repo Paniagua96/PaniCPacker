@@ -4,12 +4,7 @@
 #include <QFileInfo>
 
 
-bool ExportService::exportImage(
-    QWidget *parent,
-    const QImage &image,
-    QString *errorMessage,
-    QString *exportedFilePath
-)
+bool ExportService::exportImage(QWidget *parent, const QImage &image, QString *errorMessage, QString *exportedFilePath)
 {
     const QString filePath =
         QFileDialog::getSaveFileName(
@@ -38,11 +33,7 @@ bool ExportService::exportImage(
     return true;
 }
 
-bool ExportService::overwriteImage(
-    const QString &filePath,
-    const QImage &image,
-    QString *errorMessage
-)
+bool ExportService::overwriteImage(const QString &filePath, const QImage &image,  QString *errorMessage)
 {
     if (filePath.isEmpty()) {
         if (errorMessage != nullptr) {

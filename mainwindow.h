@@ -32,38 +32,36 @@ private:
 
     int outputSize_width;
     int outputSize_height;
-    QString lastExportPath;
     bool exportIsUpToDate = false;
     QImage infoSourceImage;
     QString infoSourcePath;
+    QString lastExportPath;
+    const ChannelState *isolatedChannel() const;
 
     void helperCopyTextureData(ChannelState &source, ChannelState &target);
     void helperUpdateAllThumbnails();
+    void helperShowStyledMessage(QMessageBox::Icon icon, const QString &title, const QString &message);
     
     void initializeChannels();
     void setupConnections();
     void setupOutputSizes();
-    void updateTextureInfo();
-    void markExportOutdated();
-    QString formatByteSize(qint64 bytes) const;
-    QImage buildCurrentPackedTexture() const;
-    void showStyledMessage(
-        QMessageBox::Icon icon,
-        const QString &title,
-        const QString &message
-    );
 
-    void swapChannel(ChannelState &sourceChannel, int indexToSwap);
+    void textureInfo_markExportOutdated();
+    QString textureInfo_formatByteSize(qint64 bytes) const;
+    void updateTextureInfo();
+
+
     void loadChannelsFromTexture();
     void loadChannelTexture(ChannelState &channel);
     void removeChannelTexture(ChannelState &channel);
-    void updateChannelThumbnail(const ChannelState &channel, QLabel *label);
-    void setIsolatedChannel(TextureChannel channel, bool enabled);
-    ChannelState *channelState(TextureChannel channel);
+    void swapChannel(ChannelState &sourceChannel, int indexToSwap);
 
+    void setIsolatedChannel(TextureChannel channel, bool enabled);
+
+    void updateChannelThumbnail(const ChannelState &channel, QLabel *label);
     void updatePreview();
 
-    const ChannelState *isolatedChannel() const;
+    QImage buildCurrentPackedTexture() const;
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

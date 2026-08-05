@@ -1,12 +1,5 @@
 #include "textureprocessor.h"
 
-
-// bool TextureProcessor::isPowerOfTwo(int value)
-// {
-//     //Check if texture has a valid size and if the module is 0 to know if it is power of two
-//     return value > 0 && (value &(value - 1)) == 0;
-// }
-
 bool TextureProcessor::isValidSourceImage(const QImage &image)
 {
     //Check if it has an image
@@ -16,14 +9,6 @@ bool TextureProcessor::isValidSourceImage(const QImage &image)
     }
 
     return true;
-
-
-    //FEATURE: Uncomment to allow only textures squared
-    //Check if texture is square
-    //bool isSquareTexture = image.width() == image.height();
-
-    //Check if width & height are power of two
-    //return (isPowerOfTwo(image.width()) && isPowerOfTwo(image.height())) || isSquareTexture;
 }
 
 bool TextureProcessor::isSquareTexture(const QImage &image)
@@ -31,16 +16,18 @@ bool TextureProcessor::isSquareTexture(const QImage &image)
     return image.width() == image.height();
 }
 
-QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const QSize &outputSize)
+QImage TextureProcessor::getImageFromChannelData(const ChannelState &channel, const QSize &outputSize)
 {
+    //Get an image loaded -> convert to rgba to avoid wrong data with other formats -> convert to grayscale (8 bits data per pixel)
+
     QImage result;
 
     if(channel.hasTexture && !channel.sourceImage.isNull())
     {
-        //Create a new image to write info with the texture channel
+        //Create a new image and converted rgba to keep uniform channels with data
         QImage source = channel.sourceImage.convertToFormat(QImage::Format_RGBA8888);
 
-        //Convert grayscale
+        //Convert grayscale,
         result = QImage(source.size(),QImage::Format_Grayscale8);
 
         for (int y = 0; y < source.height(); ++y) {
@@ -97,7 +84,7 @@ QImage TextureProcessor::prepareChannelImage(const ChannelState &channel, const 
 QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const QSize &outputSize)
 {
     //Create variable to save the channel to be isolated
-    const QImage gray = prepareChannelImage(channel,outputSize);
+    const QImage gray = getImageFromChannelData(channel,outputSize);
 
     return gray.convertToFormat(QImage::Format_RGB888);
 }
@@ -105,10 +92,10 @@ QImage TextureProcessor::buildIsolatedPreview(const ChannelState &channel, const
 QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const ChannelState &green, const ChannelState &blue, const ChannelState &alpha, const QSize &outputSize,const bool useAlpha)
 {
     //Get images with their pixel values
-    const QImage redImage = prepareChannelImage(red,outputSize);
-    const QImage greenImage = prepareChannelImage(green,outputSize);
-    const QImage blueImage = prepareChannelImage(blue,outputSize);
-    const QImage alphaImage = prepareChannelImage(alpha,outputSize);
+    const QImage redImage = getImageFromChannelData(red,outputSize);
+    const QImage greenImage = getImageFromChannelData(green,outputSize);
+    const QImage blueImage = getImageFromChannelData(blue,outputSize);
+    const QImage alphaImage = getImageFromChannelData(alpha,outputSize);
 
     //Var to save the final result
     const QImage::Format format = useAlpha
@@ -132,7 +119,8 @@ QImage TextureProcessor::buildPackedTexture(const ChannelState &red, const Chann
             outputLine[outputIndex + 0] = redLine[x];
             outputLine[outputIndex + 1] = greenLine[x];
             outputLine[outputIndex + 2] = blueLine[x];
-            outputLine[outputIndex + 3] = alphaLine[x];
+            if(useAlpha)
+                outputLine[outputIndex + 3] = alphaLine[x];
         }
     }
 
