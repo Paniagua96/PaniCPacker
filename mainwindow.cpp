@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
     );
 
     //Show initial info & preview text
-    updateTextureInfo();
+    textureInfo_update();
     updatePreview();
 }
 
@@ -289,7 +289,7 @@ void MainWindow::setupConnections()
             swapChannel(redChannel,ui->cb_swap_red->currentData().toInt());
             helperUpdateAllThumbnails();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 #pragma endregion ChannelRED
@@ -374,7 +374,7 @@ void MainWindow::setupConnections()
             swapChannel(greenChannel,ui->cb_swap_green->currentData().toInt());
             helperUpdateAllThumbnails();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 #pragma endregion ChannelGREEN
@@ -459,7 +459,7 @@ void MainWindow::setupConnections()
             swapChannel(blueChannel,ui->cb_swap_blue->currentData().toInt());
             helperUpdateAllThumbnails();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 #pragma endregion ChannelBLUE
@@ -474,7 +474,7 @@ void MainWindow::setupConnections()
         {
             ui->f_AlphaChannel->setVisible(checked);
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 
@@ -556,7 +556,7 @@ void MainWindow::setupConnections()
             swapChannel(alphaChannel,ui->cb_swap_alpha->currentData().toInt());
             helperUpdateAllThumbnails();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 #pragma endregion ChannelALPHA
@@ -571,7 +571,7 @@ void MainWindow::setupConnections()
         {
             outputSize_width = ui->cb_OutputSize_width->currentData().toInt();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 
@@ -584,7 +584,7 @@ void MainWindow::setupConnections()
         {
             outputSize_height = ui->cb_OutputSize_height->currentData().toInt();
             textureInfo_markExportOutdated();
-            updateTextureInfo();
+            textureInfo_update();
             updatePreview();
         });
 
@@ -611,7 +611,7 @@ void MainWindow::setupConnections()
                 exportIsUpToDate = true;
                 ui->btn_overwrite->setEnabled(true);
                 ui->btn_overwrite->setToolTip(lastExportPath);
-                updateTextureInfo();
+                textureInfo_update();
                 ui->statusBar->showMessage(
                     tr("Exported: %1").arg(QFileInfo(lastExportPath).fileName()),
                     3000
@@ -649,7 +649,7 @@ void MainWindow::setupConnections()
 
             if (success) {
                 exportIsUpToDate = true;
-                updateTextureInfo();
+                textureInfo_update();
                 ui->statusBar->showMessage(
                     tr("Overwritten: %1").arg(QFileInfo(lastExportPath).fileName()),
                     3000
@@ -772,7 +772,7 @@ void MainWindow::textureInfo_markExportOutdated()
 }
 
 //Text to show info about the image loaded and the current output settings
-void MainWindow::updateTextureInfo()
+void MainWindow::textureInfo_update()
 {
     const bool useAlpha = ui->tggle_useAlpha->isChecked();
     const int bytesPerPixel = useAlpha ? 4 : 3;
@@ -890,7 +890,7 @@ void MainWindow::loadChannelsFromTexture()
     textureInfo_markExportOutdated();
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
-    updateTextureInfo();
+    textureInfo_update();
 }
 
 
@@ -939,7 +939,7 @@ void MainWindow::loadChannelTexture(ChannelState &channel)
     textureInfo_markExportOutdated();
     infoSourceImage = loadedImage;
     infoSourcePath = filePath;
-    updateTextureInfo();
+    textureInfo_update();
 }
 
 void MainWindow::removeChannelTexture(ChannelState &channel)
@@ -1108,23 +1108,24 @@ void MainWindow::updatePreview()
         if (!previewRed.previewEnabled) {
             previewRed.sourceImage = QImage();
             previewRed.hasTexture = false;
-            previewRed.inverted = true;
+            previewRed.inverted = false;
         }
 
         if (!previewGreen.previewEnabled) {
             previewGreen.sourceImage = QImage();
             previewGreen.hasTexture = false;
-            previewGreen.inverted = true;
+            previewGreen.inverted = false;
         }
 
         if (!previewBlue.previewEnabled) {
             previewBlue.sourceImage = QImage();
             previewBlue.hasTexture = false;
-            previewBlue.inverted = true;
+            previewBlue.inverted = false;
         }
 
         if (!previewAlpha.previewEnabled) {
             previewAlpha.sourceImage = QImage();
+            previewAlpha.sourceImage.fill(255); //Always watch an image in preview, (to generate preview it uses all channels, even if you have alpha disable)
             previewAlpha.hasTexture = false;
             previewAlpha.inverted = false;
         }
@@ -1137,6 +1138,8 @@ void MainWindow::updatePreview()
                 previewAlpha,
                 previewResolution,
                 ui->tggle_useAlpha->isChecked());
+
+
     }
 
     const QSize availableSize =

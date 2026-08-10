@@ -66,9 +66,13 @@ QImage TextureProcessor::getImageFromChannelData(const ChannelState &channel, co
     }
     else
     {
-        //Create image as fallback, it will be full white
+        //Create image as fallback, it will be full black
         result = QImage(outputSize, QImage::Format_Grayscale8);
-        result.fill(255);
+
+        //Fallback rgb = 0 (black) / alpha = 255 (white)
+        uint fallbackColor = channel.channel == TextureChannel::Alpha ? 255 : 0;
+
+        result.fill(fallbackColor);
     }
 
     // Invert image in case the option was selected

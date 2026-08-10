@@ -48,7 +48,7 @@ private:
 
     void textureInfo_markExportOutdated();
     QString textureInfo_formatByteSize(qint64 bytes) const;
-    void updateTextureInfo();
+    void textureInfo_update();
 
 
     void loadChannelsFromTexture();
