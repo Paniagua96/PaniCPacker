@@ -87,3 +87,6 @@ CMakeLists.txt.user*
 # Exclude custom folders
 _ExtraResources/
 _ExtraResources/*
+
+#Force to include a folder
+!Releases/*
