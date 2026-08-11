@@ -88,5 +88,8 @@ CMakeLists.txt.user*
 _ExtraResources/
 _ExtraResources/*
 
-#Force to include a folder
-!Releases/*
+# Exclude the Releases folder, but allow specific subfolders and files
+!Releases/
+!Releases/v1_0_0/
+!Releases/v1_0_0/*.exe
+!Releases/v1_0_0/*.app
