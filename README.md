@@ -1,40 +1,50 @@
-<img width="512" height="288" alt="gumroad_1280x720_2" src="https://github.com/user-attachments/assets/ed8e6b34-564f-43fd-91ec-0df873b29fa0" />
 
-**PaniCPacker** is a fast, flexible, lightweight Texture Channel Packer built with Qt. Designed for technical artists and game developers, it allows you to pack, unpack, channel-swap, and manipulate individual texture channels to streamline your PBR workflow.
 
----
-
-## ✨ Features
-
-* **Individual Channel Packing:** Load specific texture maps directly into **R**, **G**, **B**, and **A** channels.
-* **Texture Unpacking:** Import an existing packed texture and split it back into individual channels.
-* **Flexible Alpha Support:** Toggle Alpha channel usage on or off depending on target shader requirements (e.g., RGB vs RGBA).
-* **Channel Swapping & Inversion:** Easily swap channels around or invert individual channel colors (e.g., rough-to-smooth, or flipping normal map Y-channels).
-* **Channel Visualization & Preview:**
-  * Real-time preview of the final packed result.
-  * Solo / isolate individual channels to inspect specific data masks in grayscale.
-* **Export & Overwrite:** Export to standard image formats or quickly overwrite source files during iteration.
-* **Non-Square Power of Two (Po2) Scaling:** Force export resolutions to Power of Two formats, supporting non-square ratios (e.g., 512x1024, 2048x1024).
+**PaniCPacker** is a fast, lightweight texture channel packing tool designed for game development and technical art workflows. It allows you to pack, inspect, swap, and modify RGB and RGBA data maps quickly without unnecessary software overhead.
 
 ---
 
-## 🛠️ Installation & Usage
+## Demo Video
 
-### Running the Executable
-1. Download the latest release from the: ---------
-2. Extract the archive and run `Setup_PaniCPacker.exe`.
-
-> **Note:** Keep the accompanying `.dll` files in the same directory as the executable.
+[![Watch Video](https://img.youtube.com/vi/CGE4ppnuBfA/maxresdefault.jpg)](https://www.youtube.com/watch?v=CGE4ppnuBfA)
 
 ---
 
-## 📄 License & Open Source Compliance
+## Features
 
-PaniCPacker is open-source software built using the **Qt Framework**.
+- **Channel Packing:** Pack grayscale textures directly into Red, Green, Blue, or Alpha channels.
+- **Unpack & Edit:** Load existing packed textures and separate or modify their channels.
+- **Channel Isolation & Visualization:** Solo individual channels in grayscale for precise inspection.
+- **Color Inversion:** Easily invert channel values (e.g., converting Roughness to Smoothness or flipping Normal Y).
+- **Channel Swapping:** Reassign channel locations with quick swap dropdowns.
+- **Real-time Preview:** Live visual feedback of your packed texture and individual channels.
+- **Memory & Dimension Inspector:** Check texture resolutions, pixel formats, and uncompressed memory consumption.
+- **Flexible Export:** Export packed results to standard formats or overwrite original source files.
+- **Non-Square Power of Two Support:** Export forced Po2 dimensions including rectangular formats (e.g., 512x1024, 2048x1024).
+- **Responsive UI:** Clean, modern interface built with Qt.
 
-* **Qt Framework:** Covered under the **GNU Lesser General Public License v3 (LGPLv3)**.
-* **Relinking & Source Access:** Qt libraries are dynamically linked (`.dll`). Copies of the LGPLv3 license, GPLv3 license, and a written offer for Qt source code access are included in the distribution files as required by the LGPLv3 license.
+---
 
-For more details on Qt licensing, visit [qt.io/licensing](https://www.qt.io/licensing/).
+## Downloads
 
+| Platform | Recommended Download | Archive / Installer |
+| :--- | :--- | :--- |
+| **Windows** (10 / 11) | [ Download (.exe)](https://github.com/Paniagua96/PaniCPacker/releases/latest/download/Setup_PaniCPacker_WIN.exe) | Exe Installer |
+| **macOS** | [ Download (.dmg)](https://github.com/Paniagua96/PaniCPacker/releases/latest/download/Setup_PaniCPacker_MAC.dmg) | Disk Image |
 
+[View all Releases and Changelogs](https://github.com/Paniagua96/PaniCPacker/releases)
+
+---
+
+## License & Open Source Compliance
+
+PaniCPacker is free and open-source software built using the **Qt Framework**.
+
+- **Qt Framework:** Covered under the **GNU Lesser General Public License v3 (LGPLv3)**.
+- **Dynamic Linking & Source Access:** Qt libraries are dynamically linked (`.dll` / `.dylib`). Copies of LGPLv3 and GPLv3 license texts, as well as a written offer for Qt source code access, are included with all distributed releases.
+
+---
+
+## Feedback & Community
+
+This is the initial public release of **PaniCPacker**. Bug reports, feature suggestions, and general feedback are welcome! Please feel free to open an issue on GitHub.
